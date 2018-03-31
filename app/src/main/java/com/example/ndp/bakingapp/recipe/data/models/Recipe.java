@@ -3,6 +3,8 @@ package com.example.ndp.bakingapp.recipe.data.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.ArrayList;
 
 public class Recipe implements Parcelable {
@@ -11,14 +13,21 @@ public class Recipe implements Parcelable {
     private String name;
     private String image;
     private int servings;
+
+    @SerializedName("ingredients")
     private ArrayList<Ingredient> ingredients;
+
+    @SerializedName("steps")
     private ArrayList<BakingSteps> steps;
+
 
     protected Recipe(Parcel in) {
         id = in.readInt();
         name = in.readString();
         image = in.readString();
         servings = in.readInt();
+        ingredients = in.createTypedArrayList(Ingredient.CREATOR);
+        steps = in.createTypedArrayList(BakingSteps.CREATOR);
     }
 
     public static final Creator<Recipe> CREATOR = new Creator<Recipe>() {
@@ -82,6 +91,18 @@ public class Recipe implements Parcelable {
     }
 
     @Override
+    public String toString() {
+        return "Recipe{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", image='" + image + '\'' +
+                ", servings=" + servings +
+                ", ingredients=" + ingredients +
+                ", steps=" + steps +
+                '}';
+    }
+
+    @Override
     public int describeContents() {
         return 0;
     }
@@ -92,5 +113,7 @@ public class Recipe implements Parcelable {
         parcel.writeString(name);
         parcel.writeString(image);
         parcel.writeInt(servings);
+        parcel.writeTypedList(ingredients);
+        parcel.writeTypedList(steps);
     }
 }

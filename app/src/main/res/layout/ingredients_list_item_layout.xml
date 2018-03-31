@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/textViewIngredientsName"
+        android:layout_width="@dimen/ingretients_label_width"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/ingredients_label_padding"
+        android:layout_marginStart="@dimen/ingredients_label_margin_left"
+        android:layout_marginLeft="@dimen/ingredients_label_margin_left"
+        android:layout_marginTop="@dimen/ingredients_label_margin_top"
+        tools:text="@string/ingredients_name_label"
+        android:textColor="@android:color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        style="@style/Base.TextAppearance.AppCompat.Medium"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textViewIngredientsQuantity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/ingredients_quantity_margin_top"
+        android:layout_marginEnd="@dimen/ingredients_quantity_end_start"
+        android:layout_marginRight="@dimen/ingredients_quantity_end_start"
+        android:drawableEnd="@drawable/ic_measuring_cup"
+        android:drawablePadding="@dimen/ingredients_quantity_padding"
+        android:drawableRight="@drawable/ic_measuring_cup"
+        android:textStyle="bold"
+        android:textColor="@android:color/white"
+        android:padding="@dimen/ingredients_quantity_padding"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="@string/quantity_label" />
+
+</android.support.constraint.ConstraintLayout>

@@ -3,6 +3,7 @@ package com.example.ndp.bakingapp.recipe.tasks;
 
 import android.content.Context;
 import android.support.v4.content.AsyncTaskLoader;
+import android.util.Log;
 
 import com.example.ndp.bakingapp.recipe.data.models.Recipe;
 import com.example.ndp.bakingapp.recipe.data.models.RecipesList;
@@ -18,6 +19,7 @@ import java.util.ArrayList;
 public class RecipeLoader extends AsyncTaskLoader<ArrayList<Recipe>> {
 
 
+    private static final String LOG_TAG = "RecipeLoader" ;
     //create a empty list of recipe
     private ArrayList recipes =  new ArrayList<Recipe>();
 
@@ -47,7 +49,7 @@ public class RecipeLoader extends AsyncTaskLoader<ArrayList<Recipe>> {
 
             //call the network for recipe
             String response =  NetworkUtils.getRecipeFromServer(recipeUrl);
-
+            Log.d(LOG_TAG , "method called ____________");
             //validate the response
             if(!ValidationUtils.isStringEmptyOrNull(response)){
 

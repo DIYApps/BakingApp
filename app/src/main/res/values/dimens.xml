@@ -4,4 +4,20 @@
     <dimen name="app_bar_height">200dp</dimen>
     <dimen name="item_width">200dp</dimen>
     <dimen name="text_margin">16dp</dimen>
+    <dimen name="ingredients_label_margin_top">16dp</dimen>
+    <dimen name="ingredients_label_margin_left">16dp</dimen>
+    <dimen name="ingretients_label_width">200dp</dimen>
+    <dimen name="ingredients_label_padding">4dp</dimen>
+    <dimen name="ingredients_quantity_margin_top">16dp</dimen>
+    <dimen name="ingredients_quantity_margin_start">8dp</dimen>
+    <dimen name="ingredients_quantity_padding">8dp</dimen>
+    <dimen name="ingredients_quantity_width">72dp</dimen>
+    <dimen name="ingredients_quantity_end_start">8dp</dimen>
+    <dimen name="steps_layout_padding">12dp</dimen>
+    <dimen name="steps_margin_start">8dp</dimen>
+    <dimen name="exoplayer_height">200dp</dimen>
+    <dimen name="recipe_step_description_margin_start">8dp</dimen>
+    <dimen name="steps_description_padding">16dp</dimen>
+    <dimen name="step_description_min_height">160dp</dimen>
+    <dimen name="step_description_navigation_button_marging">16dp</dimen>
 </resources>

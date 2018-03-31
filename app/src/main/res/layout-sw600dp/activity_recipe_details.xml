@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:orientation="horizontal">
+<fragment
+    android:layout_width="0dp"
+    android:layout_weight="1"
+    android:layout_height="match_parent"
+    tools:context=".recipe.ui.MainActivity"
+    android:id="@+id/containerRecipeDetailsListFragment"
+    android:name="com.example.ndp.bakingapp.recipe.ui.RecipeDetailsListfragment"
+    tools:layout="@layout/fragment_recipe_details_listfragment">
+</fragment>
+    <ImageView
+        android:layout_width="2dp"
+        android:id="@+id/divider"
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimaryDark"/>
+    <FrameLayout
+        android:layout_width="0dp"
+        android:layout_weight="2"
+        android:layout_height="match_parent"
+        android:id="@+id/stepDetailsFragmentContainer"/>
+</LinearLayout>

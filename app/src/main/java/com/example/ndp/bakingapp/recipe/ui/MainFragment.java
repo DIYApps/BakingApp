@@ -49,6 +49,7 @@ public class MainFragment extends Fragment implements RecipeAdapter.OnItemClicke
     private MainPresenter mainPresenter;
 
     private static final String RECIPE_LIST_KEY = "recipe_list_key";
+    private static final String RECIPE_KEY = "recipe_key";
     private ArrayList<Recipe> recipes;
 
     public MainFragment() {
@@ -64,8 +65,13 @@ public class MainFragment extends Fragment implements RecipeAdapter.OnItemClicke
         mRecipeAdapter =  new RecipeAdapter(this);
         int spanCount = 1;
         if(getContext().getResources().getBoolean(R.bool.is_tablet)){
+            Log.d(LOG_TAG ,"This tablet layout" );
             spanCount = 2;
         }
+        else{
+            Log.d(LOG_TAG ,"This not tablet layout" );
+        }
+
         GridLayoutManager recipeLayoutManager = new GridLayoutManager(getActivity() , spanCount);
         mRecyclerView.setLayoutManager(recipeLayoutManager);
         mRecyclerView.setHasFixedSize(true);
@@ -97,7 +103,11 @@ public class MainFragment extends Fragment implements RecipeAdapter.OnItemClicke
 
     @Override
     public void onItemClicked(int position) {
-
+        Log.d(LOG_TAG , "position " + position);
+        Intent recipeDetailsActivityLauncherIntent = new Intent(getActivity() ,
+                RecipeDetailsActivity.class);
+        recipeDetailsActivityLauncherIntent.putExtra(RECIPE_KEY , recipes.get(position));
+        startActivity(recipeDetailsActivityLauncherIntent);
     }
 
     @Override
@@ -111,7 +121,6 @@ public class MainFragment extends Fragment implements RecipeAdapter.OnItemClicke
         Log.d(LOG_TAG , "Size of list " + recipes.size());
         this.recipes = recipes;
         mRecipeAdapter.setRecipeList(recipes);
-        Toast.makeText(getActivity() , "Loaded" , Toast.LENGTH_SHORT).show();
     }
 
     @Override

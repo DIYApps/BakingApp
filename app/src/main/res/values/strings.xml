@@ -5,4 +5,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="recipe_name_label">Recipe Name</string>
     <string name="servings">Servings</string>
+    <string name="ingredients_name_label">Ingredients Name</string>
+    <string name="quantity_label">Quantity</string>
+    <string name="step_description_label">Step description will follow here.</string>
 </resources>

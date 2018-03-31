@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    android:layout_width="match_parent"
+    android:id="@+id/scrollView"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <android.support.constraint.ConstraintLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".recipe.ui.BakingStepsDetailFragment">
+
+
+        <ImageView
+            android:id="@+id/exoplayerBankingStep"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/exoplayer_height"
+            android:src="@drawable/recipe"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textViewStepDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/recipe_step_description_margin_start"
+            android:layout_marginLeft="@dimen/recipe_step_description_margin_start"
+            android:layout_marginTop="@dimen/recipe_step_description_margin_start"
+            android:layout_marginEnd="@dimen/recipe_step_description_margin_start"
+            android:layout_marginRight="@dimen/recipe_step_description_margin_start"
+            android:theme="@style/StepsDescriptionTextAppearence"
+            android:minHeight="@dimen/step_description_min_height"
+            android:padding="@dimen/steps_description_padding"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/exoplayerBankingStep"
+            tools:text="@string/step_description_label" />
+    </android.support.constraint.ConstraintLayout>
+
+</ScrollView>
