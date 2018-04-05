@@ -17,7 +17,7 @@
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="match_parent"
-            android:layout_height="203dp"
+            android:layout_height="200dp"
             android:scaleType="fitXY"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -25,29 +25,29 @@
 
         <TextView
             android:id="@+id/textViewRecipeName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="8dp"
-            tools:text="@string/recipe_name_label"
-            android:textColor="@color/primary_text"
-            style="@style/Base.TextAppearance.AppCompat.Display1"
+            style="@style/Base.TextAppearance.AppCompat.Headline"
+            android:layout_width="match_parent"
+            android:layout_height="33dp"
+            android:textColor="#ffffff"
+            android:background="#4d000000"
+            android:paddingLeft="16dp"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView" />
+            app:layout_constraintTop_toTopOf="@+id/imageView"
+            app:layout_constraintVertical_bias="0.9"
+            tools:text="@string/recipe_name_label" />
 
         <TextView
             android:id="@+id/textViewServing"
-            style="@style/Base.TextAppearance.AppCompat.Body1"
-            android:layout_width="wrap_content"
+            style="@style/Base.TextAppearance.AppCompat.Caption"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="8dp"
-            android:textColor="@color/secondary_text"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            android:paddingLeft="16dp"
+            android:textColor="#e6ffffff"
+            android:background="#4d000000"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView"
+            app:layout_constraintStart_toStartOf="@+id/textViewRecipeName"
             app:layout_constraintTop_toBottomOf="@+id/textViewRecipeName"
             tools:text="@string/servings" />
     </android.support.constraint.ConstraintLayout>

@@ -15,46 +15,53 @@
         tools:context=".recipe.ui.BakingStepsDetailFragment">
 
 
-        <ImageView
+        <com.google.android.exoplayer2.ui.SimpleExoPlayerView
             android:id="@+id/exoplayerBankingStep"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
+            android:background="@android:color/black"
+            app:resize_mode="fit"
             android:layout_height="@dimen/exoplayer_height"
-            android:src="@drawable/recipe"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"/>
+
 
         <TextView
             android:id="@+id/textViewStepDescription"
-            style="@style/Base.TextAppearance.AppCompat.Headline"
+            android:textColor="@color/secondary_text"
+            android:textSize="18sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/recipe_step_description_margin_start"
             android:layout_marginLeft="@dimen/recipe_step_description_margin_start"
             android:layout_marginTop="8dp"
+            android:gravity="center_horizontal"
             android:minHeight="@dimen/step_description_min_height"
             android:paddingLeft="@dimen/steps_description_padding"
             android:paddingRight="@dimen/steps_description_padding"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewDescriptionlabel"
             tools:text="@string/step_description_label" />
+
         <TextView
             android:id="@+id/textViewDescriptionlabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
-            android:text="Description"
+            android:gravity="center_horizontal"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
-            style="@style/Base.TextAppearance.AppCompat.Display1"
-            android:textColor="@color/secondary_text"
+            android:text="@string/description_label"
+            android:textColor="@color/primary_text"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/exoplayerBankingStep" />
 
         <ImageButton
             android:id="@+id/imageButtonPreviousStep"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="72dp"
+            android:layout_height="48dp"
+            android:background="@drawable/button_selector"
             android:layout_marginStart="@dimen/step_description_navigation_button_marging"
             android:layout_marginLeft="@dimen/step_description_navigation_button_marging"
             android:layout_marginTop="8dp"
@@ -66,16 +73,30 @@
 
         <ImageButton
             android:id="@+id/imageButtonNextStep"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="72dp"
+            android:layout_height="48dp"
+            android:background="@drawable/button_selector"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="@dimen/step_description_navigation_button_marging"
             android:layout_marginRight="@dimen/step_description_navigation_button_marging"
             android:layout_marginBottom="@dimen/step_description_navigation_button_marging"
+
             android:src="@drawable/ic_navigate_next_black_24dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewStepDescription" />
+
+        <ImageView
+            android:id="@+id/imageViewVideoOverlay"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/exoplayer_height"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:visibility="gone"
+            android:scaleType="fitXY"
+            app:srcCompat="@drawable/cooking"
+            />
 
 
     </android.support.constraint.ConstraintLayout>

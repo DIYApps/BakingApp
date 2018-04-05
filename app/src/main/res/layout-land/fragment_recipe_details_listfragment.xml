@@ -10,8 +10,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimaryDark"
-        android:orientation="vertical"
+        android:orientation="horizontal"
         tools:context=".recipe.ui.RecipeDetailsListfragment">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_height="wrap_content"
+            android:id="@+id/linearLayoutIngredients">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -25,9 +31,27 @@
             android:layout_height="wrap_content"
             android:background="@android:color/black"
             android:id="@+id/recyclerViewIngredients"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_height="wrap_content"
+            android:id="@+id/linearLayoutBakingSteps">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:textColor="@android:color/black"
+                android:gravity="center"
+                android:id="@+id/textViewBakingStepLabel"
+                style="@style/Base.TextAppearance.AppCompat.Display1"
+                android:text="Baking Steps"/>
         <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:id="@+id/recyclerViewBakingSteps"/>
+        </LinearLayout>
     </LinearLayout>
 </android.support.v4.widget.NestedScrollView>

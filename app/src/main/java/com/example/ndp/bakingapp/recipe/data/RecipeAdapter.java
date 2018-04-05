@@ -47,7 +47,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
     public void onBindViewHolder(@NonNull RecipeViewHolder holder, int position) {
         Recipe recipe =  mRecipeList.get(position);
         holder.recipeNameTextView.setText(recipe.getName());
-        holder.recipeServingsTextView.setText("Servings" +recipe.getServings());
+        holder.recipeServingsTextView.setText("Servings " +recipe.getServings());
     }
 
     @Override
@@ -74,6 +74,10 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
             super(itemView);
             ButterKnife.bind(this , itemView);
             itemView.setOnClickListener(this);
+        }
+
+        public String getRecipeName(){
+            return recipeNameTextView.getText().toString();
         }
 
         @Override

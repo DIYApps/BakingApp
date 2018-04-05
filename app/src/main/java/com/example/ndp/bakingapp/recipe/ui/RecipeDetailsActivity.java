@@ -33,15 +33,28 @@ public class RecipeDetailsActivity extends AppCompatActivity
 
         //check for savedInstanceBundle
         if(savedInstanceState == null){
-            //inflate the fragment if two plane
-            if(isTwoPlane){
-                BakingStepsDetailFragment bakingStepsDetailFragment =
-                        new BakingStepsDetailFragment();
-                FragmentManager fragmentManager =  getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.add(R.id.stepDetailsFragmentContainer ,
-                        bakingStepsDetailFragment , null)
-                .commit();
+//            //inflate the fragment if two plane
+//            if(isTwoPlane){
+//                BakingStepsDetailFragment bakingStepsDetailFragment =
+//                        new BakingStepsDetailFragment();
+//                FragmentManager fragmentManager =  getSupportFragmentManager();
+//                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//                fragmentTransaction.add(R.id.stepDetailsFragmentContainer ,
+//                        bakingStepsDetailFragment , null)
+//                .commit();
+//            }
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(null != getSupportActionBar()){
+            if(recipe != null) {
+                getSupportActionBar().setSubtitle(recipe.getName());
+                getSupportActionBar().setTitle("Ingredients and Steps");
+                getSupportActionBar().setLogo(R.drawable.exo_controls_play);
+                getSupportActionBar().setHomeButtonEnabled(true);
             }
         }
     }

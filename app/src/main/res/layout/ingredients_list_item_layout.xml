@@ -17,24 +17,25 @@
         tools:text="@string/ingredients_name_label"
         android:textColor="@android:color/white"
         app:layout_constraintStart_toStartOf="parent"
-        style="@style/Base.TextAppearance.AppCompat.Medium"
+        style="@style/Base.TextAppearance.AppCompat.Caption"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textViewIngredientsQuantity"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/ingredients_quantity_margin_top"
-        android:layout_marginEnd="@dimen/ingredients_quantity_end_start"
-        android:layout_marginRight="@dimen/ingredients_quantity_end_start"
+        android:layout_height="36dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
         android:drawableEnd="@drawable/ic_measuring_cup"
-        android:drawablePadding="@dimen/ingredients_quantity_padding"
         android:drawableRight="@drawable/ic_measuring_cup"
-        android:textStyle="bold"
-        android:textColor="@android:color/white"
+        android:drawablePadding="@dimen/ingredients_quantity_padding"
         android:padding="@dimen/ingredients_quantity_padding"
+        android:textColor="@color/colorAccent"
+        app:layout_constraintBaseline_toBaselineOf="@+id/textViewIngredientsName"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textViewIngredientsName"
         tools:text="@string/quantity_label" />
 
 </android.support.constraint.ConstraintLayout>

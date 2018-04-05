@@ -37,6 +37,9 @@ public class MainPresenter {
             ((AppCompatActivity)mContext).getSupportLoaderManager()
                     .initLoader(RECIPE_LOADER_ID , null , loaderCallbacks);
         }
+        else{
+            mainView.onNoInternetConnection();
+        }
     }
 
     //create a callback

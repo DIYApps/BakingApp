@@ -130,6 +130,13 @@ public class MainFragment extends Fragment implements RecipeAdapter.OnItemClicke
     }
 
     @Override
+    public void onNoInternetConnection() {
+        mRecyclerView.setVisibility(View.INVISIBLE);
+        mErrorMessageTextView.setVisibility(View.VISIBLE);
+        mErrorMessageTextView.setText(getString(R.string.no_internet_connection_message));
+    }
+
+    @Override
     public void onShowProgressIndicator() {
         mLoadingIndicator.setVisibility(View.VISIBLE);
     }

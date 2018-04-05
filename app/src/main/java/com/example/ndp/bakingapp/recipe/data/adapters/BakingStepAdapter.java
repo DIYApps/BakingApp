@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.ndp.bakingapp.R;
@@ -51,6 +52,10 @@ public class BakingStepAdapter extends RecyclerView.Adapter
     @Override
     public void onBindViewHolder(@NonNull BakingStepViewHolder holder, int position) {
         holder.textViewBakingStep.setText(steps.get(position).getShortDescription());
+        holder.textViewStepNumber.setText(steps.get(position).getId()+"");
+        if(ValidationUtils.isStringEmptyOrNull(steps.get(position).getVideoURL())){
+            holder.imageViewIsVideoPresent.setVisibility(View.INVISIBLE);
+        }
     }
 
     @Override
@@ -62,6 +67,12 @@ public class BakingStepAdapter extends RecyclerView.Adapter
 
         @BindView(R.id.textViewShortDescription)
         TextView textViewBakingStep;
+
+        @BindView(R.id.textViewStepNumber)
+        TextView textViewStepNumber;
+
+        @BindView(R.id.imageViewIsVideoPresent)
+        ImageView imageViewIsVideoPresent;
 
         public BakingStepViewHolder(View itemView) {
             super(itemView);
