@@ -1,23 +1,24 @@
 package com.example.ndp.bakingapp.recipe.widget;
 
 import android.content.Context;
+import android.database.Cursor;
+import android.net.Uri;
 import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 import com.example.ndp.bakingapp.R;
-import com.example.ndp.bakingapp.recipe.data.models.Ingredient;
-
-import java.util.ArrayList;
+import static com.example.ndp.bakingapp.recipe.provider.RecipeContract.IngredientEntry;
 
 public class IngredientWidgetViewFactory implements RemoteViewsService.RemoteViewsFactory {
 
     private static final String LOG_TAG = "_BAK_ViewFactory" ;
-    private Context mContex;
-    private ArrayList<Ingredient> ingredients;
+    private Context mContext;
+    private String mRecipeId;
+    private Cursor mCursor;
 
-    public IngredientWidgetViewFactory(Context mContex, ArrayList<Ingredient> ingredients) {
-        this.mContex = mContex;
-        this.ingredients = ingredients;
+    public IngredientWidgetViewFactory(Context context, String recipeId) {
+        this.mContext = context;
+        this.mRecipeId = recipeId;
     }
 
     @Override
@@ -27,7 +28,13 @@ public class IngredientWidgetViewFactory implements RemoteViewsService.RemoteVie
 
     @Override
     public void onDataSetChanged() {
-
+        Uri uri  = IngredientEntry.CONTENT_URI.buildUpon()
+                .appendPath(mRecipeId).build();
+        if(mCursor !=null){
+            mCursor.close();
+        }
+        mCursor = mContext.getContentResolver().query(uri, null , null ,
+                null, null);
     }
 
     @Override
@@ -38,17 +45,24 @@ public class IngredientWidgetViewFactory implements RemoteViewsService.RemoteVie
 
     @Override
     public int getCount() {
-        return ingredients == null ? 0 :ingredients.size();
+        return mCursor == null ? 0 : mCursor.getCount();
     }
 
     @Override
     public RemoteViews getViewAt(int position) {
-        RemoteViews remoteViews = new RemoteViews(mContex.getPackageName() ,
+        if (mCursor == null || mCursor.getCount() == 0){ return null;}
+        mCursor.moveToPosition(position);
+        int ingredientNameIndex = mCursor.getColumnIndex(IngredientEntry.INGREDIENT_NAME);
+        int quantityIndex = mCursor.getColumnIndex(IngredientEntry.QUANTITY);
+        int measureIndex = mCursor.getColumnIndex(IngredientEntry.MEASURE);
+        String name = mCursor.getString(ingredientNameIndex);
+        String measure = mCursor.getString(measureIndex);
+        String quantity = mCursor.getString(quantityIndex);
+        RemoteViews remoteViews = new RemoteViews(mContext.getPackageName() ,
                 R.layout.widget_ingredient_layout);
-        Ingredient ingredient = ingredients.get(position);
-        remoteViews.setTextViewText(R.id.textView_widget_ingredient_name ,
-                ingredient.getIngredient());
-        String quantityString = ingredient.getMeasure() + " "+ingredient.getQuantity();
+
+        remoteViews.setTextViewText(R.id.textView_widget_ingredient_name, name);
+        String quantityString = measure + " "+quantity;
         remoteViews.setTextViewText(R.id.textView_widget_ingredient_quantity , quantityString);
         return remoteViews;
     }

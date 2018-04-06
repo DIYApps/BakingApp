@@ -1,6 +1,8 @@
 package com.example.ndp.bakingapp.recipe.ui;
 
 
+import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -18,6 +20,7 @@ import com.example.ndp.bakingapp.recipe.data.adapters.IngredientsAdapter;
 import com.example.ndp.bakingapp.recipe.data.models.BakingSteps;
 import com.example.ndp.bakingapp.recipe.data.models.Ingredient;
 import com.example.ndp.bakingapp.recipe.data.models.Recipe;
+import com.example.ndp.bakingapp.recipe.provider.RecipeContract;
 
 import java.util.ArrayList;
 
@@ -70,7 +73,9 @@ public class RecipeDetailsListfragment extends Fragment
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+
         Recipe recipe =  getActivity().getIntent().getParcelableExtra(RECIPE_KEY);
+
         if(recipe != null){
             Log.d(LOG_TAG ,"Recipe found with "+ recipe.getName() );
             ingredientsAdapter.setIngredients(recipe.getIngredients());
@@ -95,6 +100,12 @@ public class RecipeDetailsListfragment extends Fragment
     public void onDetach() {
         super.onDetach();
         fragmentInteraction = null;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
     }
 
     @Override

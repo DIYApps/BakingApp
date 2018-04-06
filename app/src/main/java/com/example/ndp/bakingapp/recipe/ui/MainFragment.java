@@ -1,6 +1,8 @@
 package com.example.ndp.bakingapp.recipe.ui;
 
 
+import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -18,8 +20,10 @@ import android.widget.Toast;
 
 import com.example.ndp.bakingapp.R;
 import com.example.ndp.bakingapp.recipe.data.RecipeAdapter;
+import com.example.ndp.bakingapp.recipe.data.models.Ingredient;
 import com.example.ndp.bakingapp.recipe.data.models.Recipe;
 import com.example.ndp.bakingapp.recipe.presenter.MainPresenter;
+import com.example.ndp.bakingapp.recipe.provider.RecipeContract;
 import com.example.ndp.bakingapp.recipe.view.MainView;
 import com.example.ndp.bakingapp.recipe.widget.WidgetUpdateService;
 import com.example.ndp.bakingapp.utils.ValidationUtils;
@@ -113,9 +117,10 @@ public class MainFragment extends Fragment implements RecipeAdapter.OnItemClicke
 
     }
     private void updateWidget(Recipe recipe){
+        insertAllIngredientsToDb(recipe);
         WidgetUpdateService.startDisplayIngredientsService(getActivity(),
                 recipe.getName(),
-                recipe.getIngredients());
+                String.valueOf(recipe.getId()));
     }
 
     @Override
@@ -152,5 +157,36 @@ public class MainFragment extends Fragment implements RecipeAdapter.OnItemClicke
     @Override
     public void onHideProgressIndicator() {
         mLoadingIndicator.setVisibility(View.GONE);
+    }
+
+    public void insertAllIngredientsToDb(Recipe recipe){
+        ContentResolver contentResolver = getContext().getContentResolver();
+        ContentValues[] values = new ContentValues[recipe.getIngredients().size()];
+        int position = 0;
+        for(Ingredient ingredient : recipe.getIngredients()){
+            ContentValues value =  new ContentValues();
+            value.put(RecipeContract.IngredientEntry.INGREDIENT_NAME , ingredient.getIngredient());
+            value.put(RecipeContract.IngredientEntry.MEASURE , ingredient.getMeasure());
+            value.put(RecipeContract.IngredientEntry.RECIPE_ID , String.valueOf(recipe.getId()));
+            value.put(RecipeContract.IngredientEntry.QUANTITY , String.valueOf
+                    (ingredient.getQuantity()));
+            values[position] = value;
+            position++;
+        }
+        int count = contentResolver.bulkInsert(RecipeContract.IngredientEntry.CONTENT_URI , values);
+        Log.d(LOG_TAG , "Ingredient Inserted count::"+ count);
+    }
+
+    private void deleteAllRecordFromDb(){
+        ContentResolver contentResolver = getContext().getContentResolver();
+        int deletedRow = contentResolver.delete(RecipeContract.IngredientEntry.CONTENT_URI , null ,
+                null);
+        Log.d(LOG_TAG , "deleteAllRecordFromDb :: count "+ deletedRow);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        deleteAllRecordFromDb();
     }
 }
