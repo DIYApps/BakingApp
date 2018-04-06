@@ -20,7 +20,22 @@
             </intent-filter>
         </activity>
         <activity android:name=".recipe.ui.RecipeDetailsActivity" />
-        <activity android:name=".recipe.ui.BakingStepDetailsActivity"></activity>
+        <activity
+            android:name=".recipe.ui.BakingStepDetailsActivity"
+            android:theme="@style/VideoPlayerActivityTheme" />
+
+        <receiver android:name=".recipe.widget.BakingAppWidget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/baking_app_widget_info" />
+        </receiver>
+        <service android:name=".recipe.widget.WidgetUpdateService"/>
+        <service android:name=".recipe.widget.IngredientsWidgetService"
+            android:permission="android.permission.BIND_REMOTEVIEWS"/>
     </application>
 
 </manifest>

@@ -21,6 +21,7 @@ import com.example.ndp.bakingapp.recipe.data.RecipeAdapter;
 import com.example.ndp.bakingapp.recipe.data.models.Recipe;
 import com.example.ndp.bakingapp.recipe.presenter.MainPresenter;
 import com.example.ndp.bakingapp.recipe.view.MainView;
+import com.example.ndp.bakingapp.recipe.widget.WidgetUpdateService;
 import com.example.ndp.bakingapp.utils.ValidationUtils;
 
 import java.util.ArrayList;
@@ -108,6 +109,13 @@ public class MainFragment extends Fragment implements RecipeAdapter.OnItemClicke
                 RecipeDetailsActivity.class);
         recipeDetailsActivityLauncherIntent.putExtra(RECIPE_KEY , recipes.get(position));
         startActivity(recipeDetailsActivityLauncherIntent);
+        updateWidget(recipes.get(position));
+
+    }
+    private void updateWidget(Recipe recipe){
+        WidgetUpdateService.startDisplayIngredientsService(getActivity(),
+                recipe.getName(),
+                recipe.getIngredients());
     }
 
     @Override
