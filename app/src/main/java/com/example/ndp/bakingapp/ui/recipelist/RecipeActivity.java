@@ -2,6 +2,8 @@ package com.example.ndp.bakingapp.ui.recipelist;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+
 import com.example.ndp.bakingapp.R;
 
 /**JAI MAHAKAAL
@@ -21,5 +23,11 @@ public class RecipeActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate( R.menu.recipe_menu, menu );
+        return true;
     }
 }

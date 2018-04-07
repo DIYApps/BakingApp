@@ -1,54 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView
+<android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    app:cardCornerRadius="4dp"
-    android:layout_margin="8dp"
     android:layout_height="wrap_content"
+    android:layout_marginBottom="4dp"
     android:foreground="?android:attr/selectableItemBackground"
     android:clickable="true">
 
-    <android.support.constraint.ConstraintLayout
+    <ImageView
+        android:id="@+id/imageView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="200dp"
+        android:scaleType="fitXY"
+        android:foreground="#4d000000"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/recipe" />
 
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:scaleType="fitXY"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/recipe" />
+    <TextView
+        android:id="@+id/textViewRecipeName"
+        style="@style/Base.TextAppearance.AppCompat.Headline"
+        android:layout_width="0dp"
+        android:layout_height="33dp"
+        android:background="#4d000000"
+        android:paddingLeft="16dp"
+        android:textColor="#ffffff"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/imageView"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.51"
+        tools:text="@string/recipe_name_label" />
 
-        <TextView
-            android:id="@+id/textViewRecipeName"
-            style="@style/Base.TextAppearance.AppCompat.Headline"
-            android:layout_width="match_parent"
-            android:layout_height="33dp"
-            android:textColor="#ffffff"
-            android:background="#4d000000"
-            android:paddingLeft="16dp"
-            app:layout_constraintBottom_toBottomOf="@+id/imageView"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/imageView"
-            app:layout_constraintVertical_bias="0.9"
-            tools:text="@string/recipe_name_label" />
-
-        <TextView
-            android:id="@+id/textViewServing"
-            style="@style/Base.TextAppearance.AppCompat.Caption"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingLeft="16dp"
-            android:textColor="#e6ffffff"
-            android:background="#4d000000"
-            app:layout_constraintBottom_toBottomOf="@+id/imageView"
-            app:layout_constraintStart_toStartOf="@+id/textViewRecipeName"
-            app:layout_constraintTop_toBottomOf="@+id/textViewRecipeName"
-            tools:text="@string/servings" />
-    </android.support.constraint.ConstraintLayout>
-</android.support.v7.widget.CardView>
+    <TextView
+        android:id="@+id/textViewServing"
+        style="@style/Base.TextAppearance.AppCompat.Caption"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#4d000000"
+        android:paddingLeft="16dp"
+        android:textColor="#e6ffffff"
+        android:gravity="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewRecipeName"
+        tools:text="@string/servings" />
+</android.support.constraint.ConstraintLayout>

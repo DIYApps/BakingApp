@@ -3,6 +3,7 @@ package com.example.ndp.bakingapp.ui.recipedetails;
 import android.content.Intent;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -51,13 +52,8 @@ public class RecipeDetailsActivity extends AppCompatActivity
     @Override
     protected void onResume() {
         super.onResume();
-        if(null != getSupportActionBar()){
-            if(recipe != null) {
-                getSupportActionBar().setSubtitle(recipe.getName());
-                getSupportActionBar().setTitle("Ingredients and Steps");
-                getSupportActionBar().setLogo(R.drawable.exo_controls_play);
-                getSupportActionBar().setHomeButtonEnabled(true);
-            }
+        if(recipe != null) {
+            setActionBar();
         }
     }
 
@@ -82,6 +78,15 @@ public class RecipeDetailsActivity extends AppCompatActivity
                     recipe.getSteps());
             stepsDetailsActivityLauncherIntent.putExtra(STEP_POSITION_KEY , position);
             startActivity(stepsDetailsActivityLauncherIntent);
+        }
+    }
+    private void setActionBar(){
+        ActionBar supportActionBar =  getSupportActionBar();
+        if(supportActionBar != null){
+            supportActionBar.setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setSubtitle(recipe.getName());
+            getSupportActionBar().setTitle("Ingredients and Steps");
+            getSupportActionBar().setLogo(R.drawable.exo_controls_play);
         }
     }
 }

@@ -8,6 +8,7 @@ import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
+import com.example.ndp.bakingapp.data.PreferenceHelper;
 import com.example.ndp.bakingapp.data.models.Recipe;
 import com.example.ndp.bakingapp.task.RecipeLoader;
 import com.example.ndp.bakingapp.utils.NetworkUtils;
@@ -28,10 +29,17 @@ public class RecipePresenter {
         this.recipeView = recipeView;
     }
 
-    public void loadRecipe(){
+    public void loadRecipe(boolean isRefresh){
         Log.d(LOG_TAG , "load Recipe is called");
         //check for internet connectivity
         if(NetworkUtils.checkConnectivity(mContext)){
+
+            if(isRefresh){
+                PreferenceHelper preferenceHelper = new PreferenceHelper();
+                preferenceHelper.writeIsRepositorySyncedPref(!isRefresh);
+                ((AppCompatActivity)mContext).getSupportLoaderManager()
+                        .restartLoader(RECIPE_LOADER_ID , null , loaderCallbacks);
+            }
 
             ((AppCompatActivity)mContext).getSupportLoaderManager()
                     .initLoader(RECIPE_LOADER_ID , null , loaderCallbacks);

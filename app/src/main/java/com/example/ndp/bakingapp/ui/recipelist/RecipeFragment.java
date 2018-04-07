@@ -1,6 +1,7 @@
 package com.example.ndp.bakingapp.ui.recipelist;
 
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -10,6 +11,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
@@ -17,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ndp.bakingapp.R;
+import com.example.ndp.bakingapp.data.PreferenceHelper;
 import com.example.ndp.bakingapp.data.adapters.RecipeAdapter;
 import com.example.ndp.bakingapp.data.models.Recipe;
 import com.example.ndp.bakingapp.ui.recipedetails.RecipeDetailsActivity;
@@ -57,6 +60,7 @@ public class RecipeFragment extends Fragment implements RecipeAdapter.OnItemClic
         // Required empty public constructor
     }
 
+    @SuppressLint("RestrictedApi")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -64,6 +68,7 @@ public class RecipeFragment extends Fragment implements RecipeAdapter.OnItemClic
         View view =  inflater.inflate(R.layout.fragment_main, container, false);
         mUnbinder = ButterKnife.bind(this , view);
         mRecipeAdapter =  new RecipeAdapter(this);
+        setHasOptionsMenu(true);
         int spanCount = 1;
         if(getContext().getResources().getBoolean(R.bool.is_tablet)){
             Log.d(LOG_TAG ,"This tablet layout" );
@@ -86,7 +91,7 @@ public class RecipeFragment extends Fragment implements RecipeAdapter.OnItemClic
         super.onViewCreated(view, savedInstanceState);
         if(savedInstanceState == null) {
             Log.d(LOG_TAG , "savedInstanceBundle is null");
-            recipePresenter.loadRecipe();
+            recipePresenter.loadRecipe(false);
         }else{
             Log.d(LOG_TAG , "savedInstanceBundle is not null");
             if(savedInstanceState.containsKey(RECIPE_LIST_KEY)){
@@ -96,7 +101,7 @@ public class RecipeFragment extends Fragment implements RecipeAdapter.OnItemClic
                     Log.d(LOG_TAG , "savedInstanceBundle restoring the list");
                    mRecipeAdapter.setRecipeList(recipes);
                 }else{
-                    recipePresenter.loadRecipe();
+                    recipePresenter.loadRecipe(false);
                 }
             }
         }
@@ -159,5 +164,16 @@ public class RecipeFragment extends Fragment implements RecipeAdapter.OnItemClic
     public void onDestroy() {
         super.onDestroy();
         mUnbinder.unbind();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id =  item.getItemId();
+        Log.d(LOG_TAG , "onOptionsItemSelected()::"+item.getTitle());
+        if(id == R.id.action_referesh){
+            recipePresenter.loadRecipe(true);
+            return true;
+        }
+        return false;
     }
 }

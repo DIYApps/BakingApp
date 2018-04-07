@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.example.ndp.bakingapp.R;
 import com.example.ndp.bakingapp.data.models.Recipe;
 import com.example.ndp.bakingapp.utils.ValidationUtils;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -22,6 +23,8 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
 
     private OnItemClickedListener mListener;
     private ArrayList<Recipe> mRecipeList = new ArrayList();
+    private Context mContext;
+    private int[] images =  {R.drawable.f1 , R.drawable.f2, R.drawable.f3 ,R.drawable.f4};
 
     public RecipeAdapter(OnItemClickedListener mListener) {
         this.mListener = mListener;
@@ -35,7 +38,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
     @NonNull
     @Override
     public RecipeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        Context mContext = parent.getContext();
+        mContext = parent.getContext();
         int layoutIdForListItem = R.layout.recipe_item_layout;
         LayoutInflater inflater = LayoutInflater.from( mContext );
         boolean shouldAttachToParentImmediately = false;
@@ -48,6 +51,12 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
         Recipe recipe =  mRecipeList.get(position);
         holder.recipeNameTextView.setText(recipe.getName());
         holder.recipeServingsTextView.setText("Servings " +recipe.getServings());
+        String image = recipe.getImage();
+        if(ValidationUtils.isStringEmptyOrNull(image)){
+            image = "/";
+        }
+        Picasso.with(mContext).load(image).error(images[position%4])
+                .into(holder.recipeImageView);
     }
 
     @Override
