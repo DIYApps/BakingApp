@@ -9,9 +9,9 @@
     android:layout_width="0dp"
     android:layout_weight="2"
     android:layout_height="match_parent"
-    tools:context=".recipe.ui.MainActivity"
+    tools:context=".ui.recipelist.MainActivity"
     android:id="@+id/containerRecipeDetailsListFragment"
-    android:name="com.example.ndp.bakingapp.recipe.ui.RecipeDetailsListfragment"
+    android:name="com.example.ndp.bakingapp.ui.recipedetails.RecipeDetailFragment"
     tools:layout="@layout/fragment_recipe_details_listfragment">
 </fragment>
     <ImageView

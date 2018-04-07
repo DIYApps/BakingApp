@@ -4,7 +4,7 @@ package com.example.ndp.bakingapp;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
-import com.example.ndp.bakingapp.recipe.ui.RecipeDetailsActivity;
+import com.example.ndp.bakingapp.ui.recipedetails.RecipeDetailsActivity;
 
 import org.junit.Rule;
 import org.junit.Test;

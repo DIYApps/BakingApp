@@ -1,0 +1,73 @@
+package com.example.ndp.bakingapp.ui.recipelist;
+
+import android.content.Context;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.Loader;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+
+import com.example.ndp.bakingapp.data.models.Recipe;
+import com.example.ndp.bakingapp.task.RecipeLoader;
+import com.example.ndp.bakingapp.utils.NetworkUtils;
+import com.example.ndp.bakingapp.utils.ValidationUtils;
+
+import java.util.ArrayList;
+
+public class RecipePresenter {
+
+    private static final int RECIPE_LOADER_ID = 101;
+    private static final String LOG_TAG ="MainPresenter" ;
+    private Context mContext;
+    private RecipeView recipeView;
+
+    //inject the context and recipeView to presenter
+    public RecipePresenter(Context mContext , RecipeView recipeView ) {
+        this.mContext = mContext;
+        this.recipeView = recipeView;
+    }
+
+    public void loadRecipe(){
+        Log.d(LOG_TAG , "load Recipe is called");
+        //check for internet connectivity
+        if(NetworkUtils.checkConnectivity(mContext)){
+
+            ((AppCompatActivity)mContext).getSupportLoaderManager()
+                    .initLoader(RECIPE_LOADER_ID , null , loaderCallbacks);
+        }
+        else{
+            recipeView.onNoInternetConnection();
+        }
+    }
+
+    //create a callback
+    LoaderManager.LoaderCallbacks<ArrayList<Recipe>> loaderCallbacks = new
+            LoaderManager.LoaderCallbacks<ArrayList<Recipe>>() {
+                @Override
+                public Loader<ArrayList<Recipe>> onCreateLoader(int i, Bundle bundle) {
+                    recipeView.onShowProgressIndicator();
+                    return new RecipeLoader(mContext);
+                }
+
+                @Override
+                public void onLoadFinished(@NonNull Loader<ArrayList<Recipe>> loader,
+                                           ArrayList<Recipe> recipes) {
+                    Log.d(LOG_TAG , "onLoadFinished() called");
+                    recipeView.onHideProgressIndicator();
+                    if(ValidationUtils.isListEmptyOrNull(recipes)){
+                        recipeView.onLoadingFailed();
+                        return;
+                    }
+
+                    //call view methods
+                    recipeView.onRecipeLoaded(recipes);
+                }
+
+                @Override
+                public void onLoaderReset(@NonNull Loader<ArrayList<Recipe>> loader) {
+                    recipeView.onHideProgressIndicator();
+                }
+            };
+
+}

@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".recipe.ui.MainActivity"
+    tools:context=".ui.recipelist.MainActivity"
     android:id="@+id/containerRecipeDetailsListFragment"
-    android:name="com.example.ndp.bakingapp.recipe.ui.RecipeDetailsListfragment"
+    android:name="com.example.ndp.bakingapp.ui.recipedetails.RecipeDetailFragment"
     tools:layout="@layout/fragment_recipe_details_listfragment">
 </fragment>

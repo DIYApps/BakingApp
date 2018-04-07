@@ -4,13 +4,9 @@ package com.example.ndp.bakingapp;
 import android.support.test.espresso.contrib.RecyclerViewActions;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.ViewParent;
-import android.widget.TextView;
 
-import com.example.ndp.bakingapp.recipe.data.RecipeAdapter;
-import com.example.ndp.bakingapp.recipe.ui.MainActivity;
+import com.example.ndp.bakingapp.data.adapters.RecipeAdapter;
+import com.example.ndp.bakingapp.ui.recipelist.MainActivity;
 import com.example.ndp.bakingapp.utils.NetworkUtils;
 
 import org.hamcrest.Description;

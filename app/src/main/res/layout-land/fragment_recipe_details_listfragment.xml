@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:background="@color/colorPrimaryDark"
         android:orientation="horizontal"
-        tools:context=".recipe.ui.RecipeDetailsListfragment">
+        tools:context=".ui.recipedetails.RecipeDetailFragment">
         <LinearLayout
             android:layout_width="0dp"
             android:layout_weight="1"

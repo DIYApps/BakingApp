@@ -9,7 +9,7 @@
     android:id="@+id/root_layout"
     android:orientation="vertical"
     android:fitsSystemWindows="false"
-    tools:context=".recipe.ui.BakingStepsDetailFragment">
+    tools:context=".ui.stepdetails.BakingStepsDetailFragment">
 
 
     <com.google.android.exoplayer2.ui.SimpleExoPlayerView
