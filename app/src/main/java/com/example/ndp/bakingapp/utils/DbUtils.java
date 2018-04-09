@@ -24,6 +24,7 @@ public class DbUtils {
     }
 
     public void insertAllIngredientsToDb(Recipe recipe){
+        Log.d(LOG_TAG , "inserting ingredients with recipeID "+ recipe.getId());
         ContentValues[] values = new ContentValues[recipe.getIngredients().size()];
         int position = 0;
         for(Ingredient ingredient : recipe.getIngredients()){
@@ -41,6 +42,7 @@ public class DbUtils {
     }
 
     public void insertAllStepsToDb( Recipe recipe){
+        Log.d(LOG_TAG , "inserting steps with recipeID "+ recipe.getId());
         ContentValues[] values = new ContentValues[recipe.getSteps().size()];
         int position = 0;
         for(BakingSteps step : recipe.getSteps()){
@@ -58,6 +60,9 @@ public class DbUtils {
     }
 
     public void insertAllRecipeToDb(ArrayList<Recipe> recipes){
+        deleteAllIngredientFromDb();
+        deleteAllRecipeFromDb();
+        deleteAllStepFromDb();
         ContentValues[] values = new ContentValues[recipes.size()];
         int position = 0;
         for(Recipe recipe : recipes){
@@ -165,12 +170,12 @@ public class DbUtils {
             int recipeNameIndex = cursor.getColumnIndex(RecipeContract.RecipeEntry.NAME);
             int imageIndex = cursor.getColumnIndex(RecipeContract.RecipeEntry.IMAGE);
             int servingIndex = cursor.getColumnIndex(RecipeContract.RecipeEntry.SERVINGS);
-            int idIndex = cursor.getColumnIndex(RecipeContract.StepEntry._ID);
+            int idIndex = cursor.getColumnIndex(RecipeContract.RecipeEntry.RECIPE_ID);
             String name = cursor.getString(recipeNameIndex);
             String image = cursor.getString(imageIndex);
             int servings = cursor.getInt(servingIndex);
             int id = cursor.getInt(idIndex);
-
+            Log.d(LOG_TAG , "fetching recipe with id = "+ id);
             //create recipe and add to the list
             Recipe recipe = new Recipe();
             recipe.setName(name);

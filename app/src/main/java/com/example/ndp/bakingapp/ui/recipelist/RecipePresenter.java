@@ -29,28 +29,19 @@ public class RecipePresenter {
         this.recipeView = recipeView;
     }
 
-    public void loadRecipe(boolean isRefresh){
-        Log.d(LOG_TAG , "load Recipe is called");
-        //check for internet connectivity
-        if(NetworkUtils.checkConnectivity(mContext)){
-
-            if(isRefresh){
-                PreferenceHelper preferenceHelper = new PreferenceHelper();
-                preferenceHelper.writeIsRepositorySyncedPref(!isRefresh);
-                ((AppCompatActivity)mContext).getSupportLoaderManager()
-                        .restartLoader(RECIPE_LOADER_ID , null , loaderCallbacks);
-            }
-
-            ((AppCompatActivity)mContext).getSupportLoaderManager()
-                    .initLoader(RECIPE_LOADER_ID , null , loaderCallbacks);
+    public void loadRecipe(boolean shouldRefresh){
+        Log.d(LOG_TAG , "load Recipe is called with shouldRefresh "+ shouldRefresh);
+        if(shouldRefresh){
+            PreferenceHelper preferenceHelper = PreferenceHelper.getInstance();
+            preferenceHelper.writeIsRepositorySyncedPref(false);
         }
-        else{
-            recipeView.onNoInternetConnection();
-        }
+        recipeView.onShowProgressIndicator();
+        ((AppCompatActivity)mContext).getSupportLoaderManager()
+                .restartLoader(RECIPE_LOADER_ID , null , loaderCallbacks);
     }
 
     //create a callback
-    LoaderManager.LoaderCallbacks<ArrayList<Recipe>> loaderCallbacks = new
+    private LoaderManager.LoaderCallbacks<ArrayList<Recipe>> loaderCallbacks = new
             LoaderManager.LoaderCallbacks<ArrayList<Recipe>>() {
                 @Override
                 public Loader<ArrayList<Recipe>> onCreateLoader(int i, Bundle bundle) {

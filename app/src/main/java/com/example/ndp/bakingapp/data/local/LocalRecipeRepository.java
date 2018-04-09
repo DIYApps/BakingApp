@@ -27,6 +27,7 @@ public class LocalRecipeRepository implements RecipeRepository {
             return EMPTY_LIST;
         }
         for (Recipe recipe : recipes){
+            Log.d(LOG_TAG , "recipe id = "+String.valueOf(recipe.getId()));
             recipe.setSteps(dbUtils.convertStepCursorToList
                     (String.valueOf(recipe.getId())));
             recipe.setIngredients(dbUtils.convertIngredientCursorToList

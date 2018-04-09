@@ -5,7 +5,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="4dp"
+    android:layout_marginBottom="@dimen/recipe_item_margin_bottom"
+    android:layout_marginLeft="@dimen/recipe_item_margin_left"
+    android:layout_marginRight="@dimen/recipe_item_margin_right"
+    android:layout_marginTop="@dimen/recipe_item_margin_top"
     android:foreground="?android:attr/selectableItemBackground"
     android:clickable="true">
 

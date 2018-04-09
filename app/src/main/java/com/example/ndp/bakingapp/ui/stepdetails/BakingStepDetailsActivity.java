@@ -2,6 +2,7 @@ package com.example.ndp.bakingapp.ui.stepdetails;
 
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -30,6 +31,15 @@ public class BakingStepDetailsActivity extends AppCompatActivity {
             fragmentTransaction.add(R.id.root_layout ,
                     bakingStepsDetailFragment , null)
                     .commit();
+        }
+        setActionBar();
+    }
+    private void setActionBar(){
+        ActionBar supportActionBar =  getSupportActionBar();
+        if(supportActionBar != null){
+            supportActionBar.setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setTitle(R.string.step_action_title);
+            getSupportActionBar().setLogo(R.drawable.exo_controls_play);
         }
     }
 }

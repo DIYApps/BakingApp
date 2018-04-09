@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,22 +25,31 @@ import com.example.ndp.bakingapp.R;
 import com.example.ndp.bakingapp.data.models.BakingSteps;
 import com.example.ndp.bakingapp.utils.ValidationUtils;
 import com.google.android.exoplayer2.C;
+import com.google.android.exoplayer2.ExoPlaybackException;
+import com.google.android.exoplayer2.ExoPlayer;
 import com.google.android.exoplayer2.ExoPlayerFactory;
+import com.google.android.exoplayer2.PlaybackParameters;
+import com.google.android.exoplayer2.Player;
 import com.google.android.exoplayer2.SimpleExoPlayer;
+import com.google.android.exoplayer2.Timeline;
 import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory;
 import com.google.android.exoplayer2.source.ExtractorMediaSource;
 import com.google.android.exoplayer2.source.MediaSource;
+import com.google.android.exoplayer2.source.TrackGroupArray;
 import com.google.android.exoplayer2.trackselection.AdaptiveTrackSelection;
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
 import com.google.android.exoplayer2.trackselection.TrackSelection;
+import com.google.android.exoplayer2.trackselection.TrackSelectionArray;
 import com.google.android.exoplayer2.ui.AspectRatioFrameLayout;
 import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
 import com.google.android.exoplayer2.upstream.BandwidthMeter;
 import com.google.android.exoplayer2.upstream.DataSource;
 import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.EventListener;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -68,6 +78,9 @@ public class BakingStepsDetailFragment extends Fragment implements View.OnClickL
 
     @BindView(R.id.imageViewVideoOverlay)
     ImageView imageViewVideoOverlay;
+
+    @BindView(R.id.videoBufferIndicator)
+    ProgressBar videoBufferIndicator;
 
     private SimpleExoPlayer exoPlayer;
     private boolean shouldAutoPlay;
@@ -101,21 +114,35 @@ public class BakingStepsDetailFragment extends Fragment implements View.OnClickL
                 false);
         ButterKnife.bind(this, view);
         textViewStepDescription = view.findViewById(R.id.textViewStepDescription);
+
+        //set isLandscape if textViewStepDescription is not visible
         isLandscape = textViewStepDescription == null;
+
+        //set the next and previous button
+        int visibility = View.VISIBLE;
+        if(getContext().getResources().getBoolean(R.bool.is_tablet)){
+            visibility = View.INVISIBLE;
+        }
         imageButtonNextStep = view.findViewById(R.id.imageButtonNextStep);
         if(imageButtonNextStep != null){
             imageButtonNextStep.setOnClickListener(this);
+            imageButtonNextStep.setVisibility(visibility);
         }
         imageButtonPreviousStep = view.findViewById(R.id.imageButtonPreviousStep);
         if(imageButtonPreviousStep != null){
             imageButtonPreviousStep.setOnClickListener(this);
+            imageButtonPreviousStep.setVisibility(visibility);
         }
+
         simpleExoPlayerView.setControllerHideOnTouch(true);
         simpleExoPlayerView.setResizeMode(AspectRatioFrameLayout.RESIZE_MODE_FIT);
 
         mDefaultPlayerBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.cooking);
         // Load the question mark as the background image until the user answers the question.
         simpleExoPlayerView.setDefaultArtwork(mDefaultPlayerBitmap);
+
+        //make the indicator in visible
+        videoBufferIndicator.setVisibility(View.INVISIBLE);
         return view;
     }
 
@@ -185,25 +212,37 @@ public class BakingStepsDetailFragment extends Fragment implements View.OnClickL
             exoPlayer = ExoPlayerFactory.newSimpleInstance(getContext(), trackSelector);
             // attach the player to the view.
             simpleExoPlayerView.setPlayer(exoPlayer);
-            // Produces DataSource instances through which media data is loaded
+            // add listener to player
+            exoPlayer.addListener(mPlayerListener);
         }
     }
 
     private void setVideoSourceAndPlay(){
 
         if (exoPlayer != null) {
-            String videoUrlString = null;
+
             if(ValidationUtils.isListEmptyOrNull(steps)) {
                 return;
             }
-            videoUrlString = steps.get(position).getVideoURL();
+
+            String videoUrlString = steps.get(position).getVideoURL();
             if (ValidationUtils.isStringEmptyOrNull(videoUrlString)) {
                 Toast.makeText(getContext(), R.string.empty_video_url_message,
                         Toast.LENGTH_SHORT).show();
-                if (isLandscape) {
-                    getActivity().finish();
-                }
+
+                //stop the current video.
                 exoPlayer.stop();
+
+                //set the thumbnail if available.
+                String photoUrlString = steps.get(position).getThumbnailURL();
+                if(!ValidationUtils.isStringEmptyOrNull(photoUrlString)) {
+                    //set the thumbnail image
+                    Picasso.with(getActivity())
+                            .load(photoUrlString)
+                            .error(R.drawable.cooking)
+                            .into(imageViewVideoOverlay);
+                }
+
                 simpleExoPlayerView.setVisibility(View.INVISIBLE);
                 imageViewVideoOverlay.setVisibility(View.VISIBLE);
                 return;
@@ -213,6 +252,7 @@ public class BakingStepsDetailFragment extends Fragment implements View.OnClickL
                 simpleExoPlayerView.setVisibility(View.VISIBLE);
                 imageViewVideoOverlay.setVisibility(View.INVISIBLE);
             }
+
             Log.d(LOG_TAG , "setVideoSourceAndPlay()::"+ videoUrlString);
             String userAgent = getContext().getPackageName();
             DataSource.Factory dataSourceFactory = new DefaultHttpDataSourceFactory(userAgent);
@@ -228,6 +268,7 @@ public class BakingStepsDetailFragment extends Fragment implements View.OnClickL
             if(isPlayerResumed){
                 exoPlayer.seekTo(resumePosition);
             }
+
             exoPlayer.prepare(videoSource , !isPlayerResumed , false);
             exoPlayer.setPlayWhenReady(true);
             Log.d(LOG_TAG , "setVideoSourceAndPlay()::exited.");
@@ -289,4 +330,57 @@ public class BakingStepsDetailFragment extends Fragment implements View.OnClickL
             setVideoSourceAndPlay();
         }
     }
+
+    //callback
+    private Player.EventListener mPlayerListener = new Player.EventListener() {
+        @Override
+        public void onTimelineChanged(Timeline timeline, Object manifest) {
+
+        }
+
+        @Override
+        public void onTracksChanged(TrackGroupArray trackGroups, TrackSelectionArray trackSelections) {
+
+        }
+
+        @Override
+        public void onLoadingChanged(boolean isLoading) {
+
+        }
+
+        @Override
+        public void onPlayerStateChanged(boolean playWhenReady, int playbackState) {
+
+            Log.d(LOG_TAG , "onPlayerStateChanged()playbackState::"+playbackState);
+            if(playbackState == Player.STATE_BUFFERING){
+                //show the loading Indicator
+                videoBufferIndicator.setVisibility(View.VISIBLE);
+            }
+            if(playbackState == Player.STATE_READY){
+                //hide the loading indicator
+                videoBufferIndicator.setVisibility(View.INVISIBLE);
+            }
+
+        }
+
+        @Override
+        public void onRepeatModeChanged(int repeatMode) {
+
+        }
+
+        @Override
+        public void onPlayerError(ExoPlaybackException error) {
+
+        }
+
+        @Override
+        public void onPositionDiscontinuity() {
+
+        }
+
+        @Override
+        public void onPlaybackParametersChanged(PlaybackParameters playbackParameters) {
+
+        }
+    };
 }

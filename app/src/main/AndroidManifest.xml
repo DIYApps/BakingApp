@@ -13,18 +13,28 @@
         android:supportsRtl="true"
         android:name=".BakingApp"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.recipelist.RecipeActivity">
+        <activity android:name=".ui.recipelist.RecipeActivity"
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.recipedetails.RecipeDetailsActivity" />
+        <activity android:name=".ui.recipedetails.RecipeDetailsActivity"
+            android:launchMode="singleTop">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.recipelist.RecipeActivity" />
+        </activity>
         <activity
             android:name=".ui.stepdetails.BakingStepDetailsActivity"
-            android:theme="@style/VideoPlayerActivityTheme" />
-
+            android:theme="@style/VideoPlayerActivityTheme"
+            >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.recipedetails.RecipeDetailsActivity" />
+        </activity>
         <receiver android:name=".ui.widget.BakingAppWidget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />

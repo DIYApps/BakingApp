@@ -3,7 +3,9 @@ package com.example.ndp.bakingapp.task;
 
 import android.content.Context;
 import android.support.v4.content.AsyncTaskLoader;
+import android.util.Log;
 
+import com.example.ndp.bakingapp.data.PreferenceHelper;
 import com.example.ndp.bakingapp.data.RecipeRepository;
 import com.example.ndp.bakingapp.data.RecipeRepositoryFactory;
 import com.example.ndp.bakingapp.data.models.Recipe;
@@ -24,13 +26,13 @@ public class RecipeLoader extends AsyncTaskLoader<ArrayList<Recipe>> {
     @Override
     protected void onStartLoading() {
         super.onStartLoading();
-
-        //return cached data when available
-        if(!recipes.isEmpty()){
+        boolean shouldRefresh = PreferenceHelper.getInstance().readIsRepositorySyncedPref();
+        //return cached data when available and shouldRefresh is false.
+        if(!recipes.isEmpty() && !shouldRefresh){
             deliverResult(recipes);
             return;
         }
-
+        Log.d(LOG_TAG ,"onStartLoading() syncing data with server" );
         //call to load data from network
         forceLoad();
     }

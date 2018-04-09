@@ -30,6 +30,7 @@ public class NetworkRecipeRepository implements RecipeRepository {
             //call the network for recipe
             String response =  NetworkUtils.getRecipeFromServer(recipeUrl);
             Log.d(LOG_TAG , "method called ____________");
+
             //validate the response
             if(!ValidationUtils.isStringEmptyOrNull(response)){
 
@@ -40,8 +41,12 @@ public class NetworkRecipeRepository implements RecipeRepository {
                 if(null != recipeList){
                     recipeArrayList =  recipeList.getRecipes();
                     DbUtils dbUtils = new DbUtils();
+
+                    //store the recipe to local db
                     dbUtils.insertAllRecipeToDb(recipeArrayList);
-                    PreferenceHelper preferenceHelper = new PreferenceHelper();
+
+                    //mark the  database as synced
+                    PreferenceHelper preferenceHelper = PreferenceHelper.getInstance();
                     preferenceHelper.writeIsRepositorySyncedPref(true);
                 }
             }
