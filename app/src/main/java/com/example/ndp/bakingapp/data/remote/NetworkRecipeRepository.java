@@ -1,6 +1,5 @@
 package com.example.ndp.bakingapp.data.remote;
 
-import android.content.ContentResolver;
 import android.util.Log;
 
 import com.example.ndp.bakingapp.data.PreferenceHelper;
@@ -16,6 +15,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 public class NetworkRecipeRepository implements RecipeRepository {
@@ -23,7 +23,7 @@ public class NetworkRecipeRepository implements RecipeRepository {
 
     @Override
     public List getRecipes() {
-        ArrayList recipeArrayList =  new ArrayList<Recipe>();
+        ArrayList<Recipe> recipeArrayList =  new ArrayList<Recipe>();
         try {
             URL recipeUrl = new URL(NetworkUtils.RECIPE_URL_STRING);
 
@@ -40,14 +40,21 @@ public class NetworkRecipeRepository implements RecipeRepository {
                         RecipesList.class);
                 if(null != recipeList){
                     recipeArrayList =  recipeList.getRecipes();
-                    DbUtils dbUtils = new DbUtils();
-
+                    DbUtils dbUtils = DbUtils.getInstance();
+                    HashSet<String> recipeStrings = new HashSet<>();
+                    for(Recipe recipe : recipeArrayList){
+                        String recipeString =  recipe.getId()+","+recipe.getName();
+                        Log.d(LOG_TAG , "recipeString::"+recipeString);
+                        recipeStrings.add(recipeString);
+                    }
                     //store the recipe to local db
                     dbUtils.insertAllRecipeToDb(recipeArrayList);
 
                     //mark the  database as synced
                     PreferenceHelper preferenceHelper = PreferenceHelper.getInstance();
                     preferenceHelper.writeIsRepositorySyncedPref(true);
+                    preferenceHelper.storeRecipeNamesInSharedPreference(recipeStrings);
+
                 }
             }
 

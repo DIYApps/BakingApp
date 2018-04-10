@@ -19,9 +19,19 @@ public class DbUtils {
     private static final String LOG_TAG = "_BAK_DbUtils";
     private ContentResolver contentResolver;
 
-    public DbUtils() {
+    private static DbUtils sDbUtils;
+
+    private DbUtils() {
         this.contentResolver = BakingApp.getContext().getContentResolver();
     }
+
+    public static DbUtils getInstance(){
+        if(null == sDbUtils){
+            sDbUtils = new DbUtils();
+        }
+        return sDbUtils;
+    }
+
 
     public void insertAllIngredientsToDb(Recipe recipe){
         Log.d(LOG_TAG , "inserting ingredients with recipeID "+ recipe.getId());

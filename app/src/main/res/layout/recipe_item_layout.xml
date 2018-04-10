@@ -20,7 +20,7 @@
         android:foreground="#4d000000"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/recipe" />
+         />
 
     <TextView
         android:id="@+id/textViewRecipeName"

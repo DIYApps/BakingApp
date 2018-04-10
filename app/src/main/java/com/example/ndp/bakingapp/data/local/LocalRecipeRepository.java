@@ -19,8 +19,8 @@ public class LocalRecipeRepository implements RecipeRepository {
 
     @Override
     public List getRecipes() {
-        ContentResolver contentResolver = BakingApp.getContext().getContentResolver();
-        DbUtils dbUtils = new DbUtils();
+
+        DbUtils dbUtils = DbUtils.getInstance();
         ArrayList<Recipe> recipes = dbUtils.convertRecipeCursorToList();
         if(ValidationUtils.isListEmptyOrNull(recipes)){
             Log.d(LOG_TAG , "List is empty in db");

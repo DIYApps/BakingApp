@@ -19,7 +19,6 @@
             android:id="@+id/exoplayerBankingStep"
             android:layout_width="match_parent"
             android:layout_height="@dimen/exoplayer_height"
-            android:src="@drawable/recipe"
             android:background="@android:color/black"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

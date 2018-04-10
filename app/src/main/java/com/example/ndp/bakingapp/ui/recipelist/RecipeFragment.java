@@ -37,7 +37,7 @@ public class RecipeFragment extends Fragment implements RecipeAdapter.OnItemClic
         RecipeView {
 
 
-    private static final String LOG_TAG = "MainFragment::";
+    private static final String LOG_TAG = "_BAK_MainFragment::";
     @BindView( R.id.recyclerViewRecipe)
     RecyclerView mRecyclerView;
 
@@ -89,6 +89,7 @@ public class RecipeFragment extends Fragment implements RecipeAdapter.OnItemClic
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        Log.d(LOG_TAG , "onViewCreated()::called");
         if(savedInstanceState == null) {
             Log.d(LOG_TAG , "savedInstanceBundle is null");
             recipePresenter.loadRecipe(false);
@@ -109,18 +110,11 @@ public class RecipeFragment extends Fragment implements RecipeAdapter.OnItemClic
 
     @Override
     public void onItemClicked(int position) {
-        Log.d(LOG_TAG , "position " + position);
-        Intent recipeDetailsActivityLauncherIntent = new Intent(getActivity() ,
+        Log.d(LOG_TAG, "position " + position);
+        Intent recipeDetailsActivityLauncherIntent = new Intent(getActivity(),
                 RecipeDetailsActivity.class);
-        recipeDetailsActivityLauncherIntent.putExtra(RECIPE_KEY , recipes.get(position));
+        recipeDetailsActivityLauncherIntent.putExtra(RECIPE_KEY, recipes.get(position));
         startActivity(recipeDetailsActivityLauncherIntent);
-        updateWidget(recipes.get(position));
-
-    }
-    private void updateWidget(Recipe recipe){
-        WidgetUpdateService.startDisplayIngredientsService(getActivity(),
-                recipe.getName(),
-                String.valueOf(recipe.getId()));
     }
 
     @Override
@@ -159,6 +153,12 @@ public class RecipeFragment extends Fragment implements RecipeAdapter.OnItemClic
         mLoadingIndicator.setVisibility(View.GONE);
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.d(LOG_TAG , "onPause()::called");
+
+    }
 
     @Override
     public void onDestroy() {

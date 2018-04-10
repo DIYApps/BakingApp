@@ -19,7 +19,7 @@ import java.util.ArrayList;
 public class RecipePresenter {
 
     private static final int RECIPE_LOADER_ID = 101;
-    private static final String LOG_TAG ="MainPresenter" ;
+    private static final String LOG_TAG ="_BAK_MainPresenter" ;
     private Context mContext;
     private RecipeView recipeView;
 

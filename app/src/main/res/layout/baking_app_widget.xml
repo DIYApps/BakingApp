@@ -2,7 +2,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/colorPrimary"
+    android:background="@drawable/widget_background_drawable"
     android:padding="@dimen/widget_margin">
 
     <LinearLayout
@@ -12,12 +12,15 @@
         android:id="@+id/widget_layout">
     <TextView
         android:id="@+id/appwidget_recipe_name"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:layout_margin="8dp"
-        android:background="#09C"
+        android:paddingLeft="8dp"
+        android:background="@drawable/widget_heading_backgound"
+        android:gravity="center_vertical"
+        android:drawablePadding="16dp"
+        android:drawableLeft="@drawable/ic_cooking_widget_marker"
         android:contentDescription="@string/appwidget_recipe_name_label"
         tools:text="@string/appwidget_text"
         android:textColor="#ffffff"
@@ -31,7 +34,7 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/recipe"
+        android:src="@drawable/ic_empty_list"
         android:id="@+id/empty_widget_view"
         />
 

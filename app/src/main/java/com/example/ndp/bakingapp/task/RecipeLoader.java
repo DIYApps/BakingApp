@@ -15,7 +15,7 @@ import java.util.ArrayList;
 public class RecipeLoader extends AsyncTaskLoader<ArrayList<Recipe>> {
 
 
-    private static final String LOG_TAG = "RecipeLoader" ;
+    private static final String LOG_TAG = "_BAK_RecipeLoader" ;
     //create a empty list of recipe
     private ArrayList recipes =  new ArrayList<Recipe>();
 
@@ -26,9 +26,12 @@ public class RecipeLoader extends AsyncTaskLoader<ArrayList<Recipe>> {
     @Override
     protected void onStartLoading() {
         super.onStartLoading();
-        boolean shouldRefresh = PreferenceHelper.getInstance().readIsRepositorySyncedPref();
+        boolean isRepoSynced = PreferenceHelper.getInstance().readIsRepositorySyncedPref();
+
+        Log.d(LOG_TAG ,"onStartLoading() started with " + recipes .size() +" && "+ isRepoSynced);
+        Log.d(LOG_TAG ,"onStartLoading() started with " + (!recipes .isEmpty() && isRepoSynced));
         //return cached data when available and shouldRefresh is false.
-        if(!recipes.isEmpty() && !shouldRefresh){
+        if(!recipes.isEmpty() && isRepoSynced){
             deliverResult(recipes);
             return;
         }
@@ -42,6 +45,12 @@ public class RecipeLoader extends AsyncTaskLoader<ArrayList<Recipe>> {
 
         RecipeRepository recipeRepository = RecipeRepositoryFactory.getRecipeRepository();
         return (ArrayList<Recipe>) recipeRepository.getRecipes();
+    }
+
+    @Override
+    protected void onForceLoad() {
+        super.onForceLoad();
+        Log.d(LOG_TAG , "onForceLoad()::called");
     }
 
     @Override

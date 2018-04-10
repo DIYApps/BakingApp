@@ -11,4 +11,5 @@
     <color name="icons">#6c6b6b</color>
     <color name="divider">#BDBDBD</color>
     <color name="background_color">#18a9ac</color>
+    <color name="widget_background_color">#70ecf2</color>
 </resources>

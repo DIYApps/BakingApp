@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.widget.WidgetConfigurationActivity">
+
+    <RadioGroup
+        android:id="@+id/recipeNameRadioGroup"
+        android:layout_width="142dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="@+id/textViewWidgetHeading"
+        app:layout_constraintTop_toBottomOf="@+id/textViewWidgetHeading" />
+
+    <TextView
+        android:id="@+id/textViewWidgetHeading"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        style="@style/Base.TextAppearance.AppCompat.Headline"
+        android:text="@string/widget_recipe_selection_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</android.support.constraint.ConstraintLayout>
