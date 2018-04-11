@@ -135,6 +135,7 @@ public class DbUtils {
             steps.add(bakingSteps);
         }
 
+        Log.d(LOG_TAG, "Step count "+ stepsCount);
         cursor.close();
         return steps;
     }
@@ -142,7 +143,7 @@ public class DbUtils {
     public ArrayList<Ingredient> convertIngredientCursorToList(String recipeId){
         ArrayList<Ingredient> ingredients = new ArrayList<>();
         Cursor cursor = getDetailsCursorFromProvider(RecipeContract.IngredientEntry.CONTENT_URI
-        .buildUpon().appendPath(recipeId).build());
+                .buildUpon().appendPath(recipeId).build());
         if(cursor == null || cursor.getCount() == 0){
             Log.e(LOG_TAG , "convertIngredientCursorToList():: cursor is empty");
             return ingredients;
@@ -199,11 +200,43 @@ public class DbUtils {
         return recipes;
     }
 
+    public Recipe convertCursorToRecipe(String recipeId){
+        Uri uri  = RecipeContract.RecipeEntry.CONTENT_URI.buildUpon()
+                .appendPath(recipeId).build();
+        Cursor cursor = getDetailsCursorFromProvider(uri);
+        if(cursor == null || cursor.getCount() == 0){
+            Log.e(LOG_TAG , "convertCursorToRecipe():: cursor is empty");
+            return null;
+        }
+        cursor.moveToNext();
+
+        int recipeNameIndex = cursor.getColumnIndex(RecipeContract.RecipeEntry.NAME);
+        int imageIndex = cursor.getColumnIndex(RecipeContract.RecipeEntry.IMAGE);
+        int servingIndex = cursor.getColumnIndex(RecipeContract.RecipeEntry.SERVINGS);
+        int idIndex = cursor.getColumnIndex(RecipeContract.RecipeEntry.RECIPE_ID);
+        String name = cursor.getString(recipeNameIndex);
+        String image = cursor.getString(imageIndex);
+        int servings = cursor.getInt(servingIndex);
+        int id = cursor.getInt(idIndex);
+        Log.d(LOG_TAG , "convertCursorToRecipe()::fetching recipe with id = "+ id);
+        //create recipe and add to the list
+        Recipe recipe = new Recipe();
+        recipe.setName(name);
+        recipe.setImage(image);
+        recipe.setServings(servings);
+        recipe.setId(id);
+        cursor.close();
+        recipe.setIngredients(convertIngredientCursorToList(recipeId));
+        recipe.setSteps(convertStepCursorToList(recipeId));
+        Log.d(LOG_TAG , "convertCursorToRecipe()::fetching recipe with id = "+ id);
+        return recipe;
+    }
+
     public Cursor getDetailsCursorFromProvider(Uri uri){
         Log.d(LOG_TAG , "getDetailsCursorFromProvider():: URI ::"+uri);
         return contentResolver.query(uri , null,
-        null,
-        null,
-        null);
+                null,
+                null,
+                null);
     }
 }

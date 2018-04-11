@@ -32,13 +32,11 @@ public class WidgetUpdateService extends IntentService {
         Log.d(LOG_TAG , "onHandleIntent()::Entry");
         String action =  intent.getAction();
         if(action.equals(ACTION_DISPLAY_INGREDIENTS_IN_WIDGET)){
-            String recipeId = intent.getStringExtra(RECIPE_ID_KEY);
-            String recipeName = intent.getStringExtra(RECIPE_NAME_KEY);
-
             AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
             int[] appWidgetIds = null;
+            int appWidgetId = 0;
             if (intent.hasExtra(APP_WIDGET_ID_KEY)) {
-                int appWidgetId = intent.getIntExtra(APP_WIDGET_ID_KEY, 0);
+                appWidgetId = intent.getIntExtra(APP_WIDGET_ID_KEY, 0);
                 appWidgetIds = new int[]{appWidgetId};
             }else{
 
@@ -46,30 +44,16 @@ public class WidgetUpdateService extends IntentService {
             appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.widget_list_view);
 
             //Now update all widgets
-            BakingAppWidget.onUpdateIngredientWidgets(getApplicationContext(),
+            BakingAppWidget.updateAppWidget(getApplicationContext(),
                     appWidgetManager,
-                    appWidgetIds,
-                    recipeId,
-                    recipeName );
+                    appWidgetId);
             Log.d(LOG_TAG , "onHandleIntent()::Exit");
         }
     }
 
-//    public static void startDisplayIngredientsService(Context context,String recipeName,
-//                                                      String recipeId) {
-//        Intent intent = new Intent(context, WidgetUpdateService.class);
-//        intent.setAction(ACTION_DISPLAY_INGREDIENTS_IN_WIDGET);
-//        intent.putExtra(RECIPE_ID_KEY, recipeId);
-//        intent.putExtra(RECIPE_NAME_KEY, recipeName);
-//        context.startService(intent);
-//    }
-
-    public static void startDisplayIngredientsService(Context context,int appWidgetId ,String recipeName,
-                                                      String recipeId) {
+    public static void startDisplayIngredientsService(Context context,int appWidgetId) {
         Intent intent = new Intent(context, WidgetUpdateService.class);
         intent.setAction(ACTION_DISPLAY_INGREDIENTS_IN_WIDGET);
-        intent.putExtra(RECIPE_ID_KEY, recipeId);
-        intent.putExtra(RECIPE_NAME_KEY, recipeName);
         intent.putExtra(APP_WIDGET_ID_KEY, appWidgetId);
         context.startService(intent);
     }

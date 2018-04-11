@@ -9,7 +9,7 @@
     <RadioGroup
         android:id="@+id/recipeNameRadioGroup"
         android:layout_width="142dp"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         app:layout_constraintStart_toStartOf="@+id/textViewWidgetHeading"
         app:layout_constraintTop_toBottomOf="@+id/textViewWidgetHeading" />

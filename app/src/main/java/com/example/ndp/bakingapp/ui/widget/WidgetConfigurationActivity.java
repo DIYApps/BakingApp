@@ -9,9 +9,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import com.example.ndp.bakingapp.R;
 import com.example.ndp.bakingapp.data.PreferenceHelper;
+import com.example.ndp.bakingapp.utils.ValidationUtils;
 
 import java.util.HashSet;
 
@@ -24,14 +26,29 @@ public class WidgetConfigurationActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //set the result to Cancel
+        setResult(RESULT_CANCELED);
+
         setContentView(R.layout.activity_widget_configuration);
         Log.d(LOG_TAG, "onCreate():::");
         radioGroup = findViewById(R.id.recipeNameRadioGroup);
         PreferenceHelper preferenceHelper = PreferenceHelper.getInstance();
         HashSet<String> recipeStrings = preferenceHelper.getRecipeNamesFromSharedPreference();
+
+        //finish the activity if there are no recipe stored
+        // this will stop the widget from creating.
+        if(recipeStrings ==  null || recipeStrings.isEmpty()){
+
+            //prompt the user
+            Toast.makeText(this, R.string.widget_config_failed_toast_message
+                    , Toast.LENGTH_SHORT).show();
+            finish();
+        }
+
         LayoutInflater layoutInflater = LayoutInflater.from(this);
 
-        //
+        //set the radioButtons for every recipe.
         for (String recipeString : recipeStrings) {
             Log.d(LOG_TAG, recipeString);
             RadioButton radioButton = (RadioButton) layoutInflater
@@ -43,6 +60,7 @@ public class WidgetConfigurationActivity extends AppCompatActivity {
             radioGroup.addView(radioButton);
         }
 
+        //get the widget id and validate it
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
 
@@ -51,6 +69,7 @@ public class WidgetConfigurationActivity extends AppCompatActivity {
                     AppWidgetManager.EXTRA_APPWIDGET_ID,
                     AppWidgetManager.INVALID_APPWIDGET_ID);
 
+            //Abort the widget configuration if the not a valid widget id is found.
             if (appWidgetId == AppWidgetManager.INVALID_APPWIDGET_ID) {
                 finish();
             }

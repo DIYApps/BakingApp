@@ -89,4 +89,5 @@ public class RecipeDetailsActivity extends AppCompatActivity
             getSupportActionBar().setLogo(R.drawable.exo_controls_play);
         }
     }
+
 }
