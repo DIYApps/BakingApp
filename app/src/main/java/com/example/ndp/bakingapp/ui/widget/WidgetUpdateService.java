@@ -15,8 +15,8 @@ public class WidgetUpdateService extends IntentService {
 
     private static final String LOG_TAG = "_BAK_UpdateService";
     public static final String ACTION_DISPLAY_INGREDIENTS_IN_WIDGET = "com.example.ndp.bakingapp.recipe.widget.display_ingredients";
-    private static final String RECIPE_ID_KEY = "ingredients_key";
-    private static final String RECIPE_NAME_KEY = "recipe_name_key";
+//    private static final String RECIPE_ID_KEY = "ingredients_key";
+//    private static final String RECIPE_NAME_KEY = "recipe_name_key";
     private static final String APP_WIDGET_ID_KEY = "app_widget_id_key" ;
 
     public WidgetUpdateService() {

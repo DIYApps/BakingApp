@@ -17,4 +17,6 @@
     <string name="step_action_title">Steps Details</string>
     <string name="widget_recipe_selection_label">Please select the recipe to show ingredients in the widget.</string>
     <string name="widget_config_failed_toast_message">No recipe found.Widget can\'t be configured.</string>
+    <string name="recipe_detail_loading_error_message">Error in loading the recipe details</string>
+    <string name="action_close">CLOSE</string>
 </resources>

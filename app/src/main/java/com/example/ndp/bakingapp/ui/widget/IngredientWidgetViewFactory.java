@@ -19,6 +19,7 @@ public class IngredientWidgetViewFactory implements RemoteViewsService.RemoteVie
     public IngredientWidgetViewFactory(Context context, String recipeId) {
         this.mContext = context;
         this.mRecipeId = recipeId;
+        Log.d(LOG_TAG, "mRecipeId"+mRecipeId);
     }
 
     @Override
@@ -30,6 +31,7 @@ public class IngredientWidgetViewFactory implements RemoteViewsService.RemoteVie
     public void onDataSetChanged() {
         Uri uri  = IngredientEntry.CONTENT_URI.buildUpon()
                 .appendPath(mRecipeId).build();
+        Log.d(LOG_TAG , "URI --> "+ uri);
         if(mCursor !=null){
             mCursor.close();
         }
@@ -52,6 +54,7 @@ public class IngredientWidgetViewFactory implements RemoteViewsService.RemoteVie
     public RemoteViews getViewAt(int position) {
         if (mCursor == null || mCursor.getCount() == 0){ return null;}
         mCursor.moveToPosition(position);
+
         int ingredientNameIndex = mCursor.getColumnIndex(IngredientEntry.INGREDIENT_NAME);
         int quantityIndex = mCursor.getColumnIndex(IngredientEntry.QUANTITY);
         int measureIndex = mCursor.getColumnIndex(IngredientEntry.MEASURE);
@@ -63,6 +66,7 @@ public class IngredientWidgetViewFactory implements RemoteViewsService.RemoteVie
 
         remoteViews.setTextViewText(R.id.textView_widget_ingredient_name, name);
         String quantityString = measure + " "+quantity;
+        Log.d(LOG_TAG , "getViewAt() " + name +","+quantityString);
         remoteViews.setTextViewText(R.id.textView_widget_ingredient_quantity , quantityString);
         return remoteViews;
     }

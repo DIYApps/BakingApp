@@ -90,8 +90,7 @@ public class WidgetConfigurationActivity extends AppCompatActivity {
                         recipeString);
                 WidgetUpdateService.startDisplayIngredientsService(
 
-                        WidgetConfigurationActivity.this, appWidgetId ,recipeName ,
-                        String.valueOf(i)  );
+                        WidgetConfigurationActivity.this, appWidgetId);
                 Intent resultValue = new Intent();
                 resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
                 setResult(RESULT_OK, resultValue);

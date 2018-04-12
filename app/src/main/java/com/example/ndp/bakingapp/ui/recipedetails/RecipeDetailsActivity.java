@@ -1,6 +1,7 @@
 package com.example.ndp.bakingapp.ui.recipedetails;
 
 import android.content.Intent;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
@@ -12,12 +13,13 @@ import com.example.ndp.bakingapp.R;
 import com.example.ndp.bakingapp.data.models.Recipe;
 import com.example.ndp.bakingapp.ui.stepdetails.BakingStepDetailsActivity;
 import com.example.ndp.bakingapp.ui.stepdetails.BakingStepsDetailFragment;
+import com.example.ndp.bakingapp.utils.ValidationUtils;
 
 public class RecipeDetailsActivity extends AppCompatActivity
         implements RecipeDetailFragment.FragmentInteraction {
     private static final String STEP_LIST_KEY =  "step_list_key";
     private static final String STEP_POSITION_KEY = "step_position_key";
-    private static final String LOG_TAG = "RecipeActivity";
+    private static final String LOG_TAG = "_BAK_RecipeActivity";
     private Recipe recipe;
     private boolean isTwoPlane;
     private static final String RECIPE_KEY = "recipe_key";
@@ -26,7 +28,6 @@ public class RecipeDetailsActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_details);
-        recipe = getIntent().getParcelableExtra(RECIPE_KEY);
         if(findViewById(R.id.stepDetailsFragmentContainer) == null){
             isTwoPlane =  false;
         }
@@ -47,18 +48,30 @@ public class RecipeDetailsActivity extends AppCompatActivity
 //                .commit();
 //            }
         }
+
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        Log.d(LOG_TAG , "onNewIntent" + intent.getStringExtra("recipe_id_key"));
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        Fragment fragment = fragmentManager.findFragmentById(R.id.containerRecipeDetailsListFragment);
+        if(null != fragment && fragment instanceof RecipeDetailFragment){
+            ((RecipeDetailFragment)fragment).onNewIntent(intent);
+        }
+        setIntent(intent);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        if(recipe != null) {
-            setActionBar();
-        }
     }
 
+
     @Override
-    public void onFragmentInteraction(int position) {
+    public void onFragmentInteraction(Recipe recipe,int position) {
+        this.recipe =  recipe;
         if(isTwoPlane){
             BakingStepsDetailFragment bakingStepsDetailFragment =
                     new BakingStepsDetailFragment();
@@ -80,13 +93,21 @@ public class RecipeDetailsActivity extends AppCompatActivity
             startActivity(stepsDetailsActivityLauncherIntent);
         }
     }
-    private void setActionBar(){
-        ActionBar supportActionBar =  getSupportActionBar();
-        if(supportActionBar != null){
-            supportActionBar.setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setSubtitle(recipe.getName());
-            getSupportActionBar().setTitle("Ingredients and Steps");
-            getSupportActionBar().setLogo(R.drawable.exo_controls_play);
+
+    @Override
+    public void setTitle(String recipeName) {
+        setActionBar(recipeName);
+    }
+
+    private void setActionBar(String recipeName){
+        if(!ValidationUtils.isStringEmptyOrNull(recipeName)) {
+            ActionBar supportActionBar = getSupportActionBar();
+            if (supportActionBar != null) {
+                supportActionBar.setDisplayHomeAsUpEnabled(true);
+                getSupportActionBar().setSubtitle(recipeName);
+                getSupportActionBar().setTitle("Ingredients and Steps");
+                getSupportActionBar().setLogo(R.drawable.exo_controls_play);
+            }
         }
     }
 

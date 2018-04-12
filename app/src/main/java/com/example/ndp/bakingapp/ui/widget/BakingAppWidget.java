@@ -5,6 +5,7 @@ import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.util.Log;
 import android.widget.RemoteViews;
 
@@ -22,7 +23,7 @@ import com.example.ndp.bakingapp.utils.ValidationUtils;
  */
 public class BakingAppWidget extends AppWidgetProvider {
 
-    private static final String RECIPE_ID_KEY = "ingredients_key";
+    private static final String RECIPE_ID_KEY = "recipe_id_key";
     private static final String RECIPE_NAME_KEY = "recipe_name_key";
     private static final String LOG_TAG = "_BAK_BakingAppWidget";
     private static final String RECIPE_KEY = "recipe_key";
@@ -65,29 +66,23 @@ public class BakingAppWidget extends AppWidgetProvider {
         // Enter relevant functionality for when the last widget is disabled
     }
 
-    private static RemoteViews createIngredientList(Context context , int appWidgetId ,String recipeId,
+    private static RemoteViews createIngredientList(Context context , int appWidgetId ,
+                                                    String recipeId,
                                              String recipeName){
         Log.d(LOG_TAG , "createIngredientList():: "+ recipeName);
         Log.d(LOG_TAG , "createIngredientList():: "+ recipeId);
-        RemoteViews rv = new RemoteViews(context.getPackageName(), R.layout.baking_app_widget);
+        RemoteViews rv = new RemoteViews(context.getPackageName(),
+                R.layout.baking_app_widget);
         rv.setTextViewText(R.id.appwidget_recipe_name, recipeName);
 
 
         // Set the GridWidgetService intent to act as the adapter for the GridView
         Intent intent = new Intent(context, IngredientsWidgetService.class);
-        intent.putExtra(RECIPE_ID_KEY , recipeId);
+        intent.setData(Uri.fromParts("content", String.valueOf(recipeId), null));
         rv.setRemoteAdapter(appWidgetId , R.id.widget_list_view, intent);
         rv.setEmptyView(R.id.widget_list_view, R.id.empty_widget_view);
-
-        DbUtils dbUtils = DbUtils.getInstance();
-        Recipe recipe = dbUtils.convertCursorToRecipe(recipeId);
-
-        Log.d(LOG_TAG ,"updateAppWidget()::recipeName"+ recipe == null ? "Null return" :
-                recipe.getName());
-        Log.d(LOG_TAG , "updateAppWidget()::--Stepsize"+recipe.getSteps() == null ? "0" :
-                recipe.getSteps().size()+"");
         rv.setOnClickPendingIntent(R.id.appwidget_recipe_name , createPendingIntent(context ,
-                recipe));
+                recipeId));
 
         Log.d(LOG_TAG , "createIngredientList():: Exit");
         return rv;
@@ -107,12 +102,15 @@ public class BakingAppWidget extends AppWidgetProvider {
         Log.d(LOG_TAG , "onDeleted():: Exit");
     }
 
-    private static PendingIntent createPendingIntent(Context context , Recipe recipe){
+    private static PendingIntent createPendingIntent(Context context , String recipeId){
 
-        Log.d(LOG_TAG ,"createPendingIntent:::" );
+        Log.d(LOG_TAG ,"createPendingIntent::: pending for with recipe " );
         // Create an Intent to launch ExampleActivity
         Intent intent = new Intent(context, RecipeDetailsActivity.class);
-        intent.putExtra(RECIPE_KEY , recipe);
+        intent.putExtra(RECIPE_ID_KEY , recipeId);
+
+        //add the extra to data as extra are get ignored.
+        intent.setData(Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME)));
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         return PendingIntent.getActivity(context, 0, intent, 0);
     }

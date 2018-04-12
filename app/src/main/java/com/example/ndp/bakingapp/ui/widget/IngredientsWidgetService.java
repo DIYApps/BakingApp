@@ -8,12 +8,13 @@ public class IngredientsWidgetService extends RemoteViewsService {
 
 
      static final String LOG_TAG = "_BAK_WidgetService";
-    private static final String RECIPE_ID_KEY = "ingredients_key";
+    private static final String RECIPE_ID_KEY = "recipe_id_key";
 
     @Override
     public RemoteViewsFactory onGetViewFactory(Intent intent) {
-        Log.d(LOG_TAG , "onGetViewFactory");
+        String recipeId =  intent.getData().getSchemeSpecificPart();
+        Log.d(LOG_TAG , "onGetViewFactory recipe id "+ recipeId );
         return new IngredientWidgetViewFactory(this.getApplicationContext() ,
-                intent.getStringExtra(RECIPE_ID_KEY));
+                recipeId);
     }
 }
