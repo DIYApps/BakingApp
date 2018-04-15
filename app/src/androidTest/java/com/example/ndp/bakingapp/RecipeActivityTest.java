@@ -5,9 +5,9 @@ import android.support.test.espresso.contrib.RecyclerViewActions;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
+import com.example.ndp.bakingapp.data.PreferenceHelper;
 import com.example.ndp.bakingapp.data.adapters.RecipeAdapter;
-import com.example.ndp.bakingapp.ui.recipelist.MainActivity;
-import com.example.ndp.bakingapp.utils.NetworkUtils;
+import com.example.ndp.bakingapp.ui.recipelist.RecipeActivity;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
@@ -21,28 +21,34 @@ import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static android.support.test.espresso.matcher.ViewMatchers.withText;
-import static org.hamcrest.core.AllOf.allOf;
 
 @RunWith(AndroidJUnit4.class)
-public class MainActivityTest {
+public class RecipeActivityTest {
 
 
     @Rule
-    public ActivityTestRule<MainActivity> mainActivityActivityTestRule = new ActivityTestRule<>
-            (MainActivity.class);
-//
-//    @Test
-//    public void testLoaderIndicatorIsShowing() {
-//        onView(withId(R.id.pb_loading_indicator)).check(matches(isDisplayed()));
-//    }
+    public ActivityTestRule<RecipeActivity> mainActivityActivityTestRule = new ActivityTestRule<>
+            (RecipeActivity.class);
 
     @Test
-    public void testNetworkConnectivity_ShowErrorMessage(){
-        if(!NetworkUtils.checkConnectivity(mainActivityActivityTestRule.getActivity())){
-            onView(withText(R.string.no_internet_connection_message)).check(matches(isDisplayed()));
-        }
+    public void testOptionMenuClicked_recipeListRefreshed() {
+        PreferenceHelper preferenceHelper = PreferenceHelper.getInstance();
+        preferenceHelper.writeIsRepositorySyncedPref(false);
+
+        onView(withId(R.id.action_referesh))
+                .check(matches(isDisplayed()))
+                .perform(click());
+        assert (!preferenceHelper.readIsRepositorySyncedPref());
     }
+
+    /**
+     * Test method to test the Checks the recyelcer view to be displayed
+     * scroll to specific position and perform click.
+     * Verify the next activity is displayed with id of recyclerViewIngredients
+     *
+     */
+
+
 
     @Test
     public void testRecyclerViewItemClicked_NextActivityIsDisplayed(){
@@ -54,6 +60,9 @@ public class MainActivityTest {
         onView(withId(R.id.recyclerViewIngredients)).check(matches(isDisplayed()));
     }
 
+    /**
+     * test recycler view contain a entry with  desired recipe name
+     */
     @Test
     public void testRecyclerViewChildElelments_WithText() {
         final String RECIPE_NAME =  "Nutella Pie";
@@ -62,6 +71,7 @@ public class MainActivityTest {
 
     }
 
+    /*A custom matcher which matches a ViewHolder with desired recipe name.*/
     private static Matcher<RecipeAdapter.RecipeViewHolder> withRecipeName(final String recipeName){
         return new TypeSafeMatcher<RecipeAdapter.RecipeViewHolder>(){
 

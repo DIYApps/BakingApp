@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -44,8 +45,8 @@ public class RecipeFragment extends Fragment implements RecipeAdapter.OnItemClic
     @BindView( R.id.pb_loading_indicator )
     ProgressBar mLoadingIndicator;
 
-    @BindView( R.id.tv_error_message )
-    TextView mErrorMessageTextView;
+    @BindView( R.id.imageViewErrorMessage )
+    ImageView mErrorMessageImageView;
 
     private RecipeAdapter mRecipeAdapter;
     private RecipePresenter recipePresenter;
@@ -126,6 +127,8 @@ public class RecipeFragment extends Fragment implements RecipeAdapter.OnItemClic
     @Override
     public void onRecipeLoaded(ArrayList<Recipe> recipes) {
         Log.d(LOG_TAG , "Size of list " + recipes.size());
+        mRecyclerView.setVisibility(View.VISIBLE);
+        mErrorMessageImageView.setVisibility(View.INVISIBLE);
         this.recipes = recipes;
         mRecipeAdapter.setRecipeList(recipes);
     }
@@ -133,14 +136,15 @@ public class RecipeFragment extends Fragment implements RecipeAdapter.OnItemClic
     @Override
     public void onLoadingFailed() {
         Log.e(LOG_TAG , "Loading is failed ");
-        Toast.makeText(getActivity() , "Loading failed." , Toast.LENGTH_SHORT).show();
+        mRecyclerView.setVisibility(View.INVISIBLE);
+        mErrorMessageImageView.setVisibility(View.VISIBLE);
+        Toast.makeText(getActivity() , "No recipe to load." , Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onNoInternetConnection() {
         mRecyclerView.setVisibility(View.INVISIBLE);
-        mErrorMessageTextView.setVisibility(View.VISIBLE);
-        mErrorMessageTextView.setText(getString(R.string.no_internet_connection_message));
+        mErrorMessageImageView.setVisibility(View.VISIBLE);
     }
 
     @Override

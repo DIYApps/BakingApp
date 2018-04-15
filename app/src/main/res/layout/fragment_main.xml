@@ -4,21 +4,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimaryDark"
-    tools:context=".ui.MainFragment">
+    tools:context=".ui.recipelist.RecipeFragment">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerViewRecipe"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
-    <TextView
-        android:id="@+id/tv_error_message"
+    <ImageView
+        android:id="@+id/imageViewErrorMessage"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_gravity="center"
-        android:padding="16dp"
+        android:padding="32dp"
         android:gravity="center"
         android:textSize="20sp"
+        android:src="@drawable/ic_empty_list"
         android:visibility="invisible"/>
 
     <ProgressBar

@@ -46,6 +46,10 @@ public class RecipeProvider extends ContentProvider{
     @Override
     public boolean onCreate() {
         Context context = getContext();
+        if(null == context){
+            Log.e(LOG_TAG , "onCreate()::mContext is null");
+        }
+        Log.d(LOG_TAG , "onCreate()::mContext is not null");
         mRecipeDbHelper = new RecipeDbHelper(context);
         return true;
     }
@@ -58,7 +62,7 @@ public class RecipeProvider extends ContentProvider{
         int match = sUriMatcher.match(uri);
         Log.d(LOG_TAG , "query() match ::"+match);
         Cursor cursor = null;
-        SQLiteDatabase db = mRecipeDbHelper.getReadableDatabase();
+        SQLiteDatabase db = mRecipeDbHelper.getWritableDatabase();
         String recipeId = null;
         try{
             switch (match){
@@ -144,7 +148,7 @@ public class RecipeProvider extends ContentProvider{
                             null, values);
                     if (id > 0) {
                         returnUri = ContentUris.withAppendedId
-                                (RecipeContract.IngredientEntry.CONTENT_URI, id);
+                                (RecipeContract.StepEntry.CONTENT_URI, id);
                     }
                     break;
                 case RECIPE:
@@ -154,7 +158,7 @@ public class RecipeProvider extends ContentProvider{
                             null, values);
                     if (id > 0) {
                         returnUri = ContentUris.withAppendedId
-                                (RecipeContract.IngredientEntry.CONTENT_URI, id);
+                                (RecipeContract.RecipeEntry.CONTENT_URI, id);
                     }
                     break;
                 default:

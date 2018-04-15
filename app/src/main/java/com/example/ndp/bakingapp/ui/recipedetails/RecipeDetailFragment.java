@@ -112,6 +112,7 @@ public class RecipeDetailFragment extends Fragment
 
     @Override
     public void onItemClicked(int position) {
+        Log.d(LOG_TAG ,"onItemClicked()");
         fragmentInteraction.onFragmentInteraction(recipe ,position);
     }
 
