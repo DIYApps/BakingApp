@@ -26,7 +26,6 @@ import com.example.ndp.bakingapp.data.models.BakingSteps;
 import com.example.ndp.bakingapp.utils.ValidationUtils;
 import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.ExoPlaybackException;
-import com.google.android.exoplayer2.ExoPlayer;
 import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.PlaybackParameters;
 import com.google.android.exoplayer2.Player;
@@ -49,7 +48,6 @@ import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.EventListener;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -62,10 +60,11 @@ public class BakingStepsDetailFragment extends Fragment implements View.OnClickL
 
     private static final String RESUME_WINDOW_KEY = "resume_window_key";
     private static final String RESUME_POSITION_KEY = "resume_position_key";
+    private static final int FAST_FORWARD_INCREMENT = 1000;
     private ArrayList<BakingSteps> steps;
     private int position;
-    private String STEPS_POSITION_KEY = "steps_position_key";
-    private String STEPS_LIST_KEY = "steps_list_key";
+    private final String STEPS_POSITION_KEY = "steps_position_key";
+    private final String STEPS_LIST_KEY = "steps_list_key";
 
     @BindView(R.id.exoplayerBankingStep)
     SimpleExoPlayerView simpleExoPlayerView;
@@ -83,13 +82,11 @@ public class BakingStepsDetailFragment extends Fragment implements View.OnClickL
     ProgressBar videoBufferIndicator;
 
     private SimpleExoPlayer exoPlayer;
-    private boolean shouldAutoPlay;
     private DefaultTrackSelector trackSelector;
     private static final String LOG_TAG = "StepsDetailF";
     private int resumeWindow;
     private long resumePosition;
     private boolean isLandscape;
-    private Bitmap mDefaultPlayerBitmap;
 
 
     public BakingStepsDetailFragment() {
@@ -137,7 +134,7 @@ public class BakingStepsDetailFragment extends Fragment implements View.OnClickL
         simpleExoPlayerView.setControllerHideOnTouch(true);
         simpleExoPlayerView.setResizeMode(AspectRatioFrameLayout.RESIZE_MODE_FIT);
 
-        mDefaultPlayerBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.cooking);
+        Bitmap mDefaultPlayerBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.cooking);
         // Load the question mark as the background image until the user answers the question.
         simpleExoPlayerView.setDefaultArtwork(mDefaultPlayerBitmap);
 
@@ -212,8 +209,10 @@ public class BakingStepsDetailFragment extends Fragment implements View.OnClickL
             exoPlayer = ExoPlayerFactory.newSimpleInstance(getContext(), trackSelector);
             // attach the player to the view.
             simpleExoPlayerView.setPlayer(exoPlayer);
+            simpleExoPlayerView.setFastForwardIncrementMs(FAST_FORWARD_INCREMENT);
             // add listener to player
             exoPlayer.addListener(mPlayerListener);
+
         }
     }
 
@@ -277,7 +276,6 @@ public class BakingStepsDetailFragment extends Fragment implements View.OnClickL
 
     private void stopAndReleasePlayer(){
         if (exoPlayer != null) {
-            shouldAutoPlay = exoPlayer.getPlayWhenReady();
             exoPlayer.release();
             exoPlayer = null;
             trackSelector = null;
@@ -305,82 +303,91 @@ public class BakingStepsDetailFragment extends Fragment implements View.OnClickL
             resumePosition = Math.max(0, exoPlayer.getContentPosition());
         }
     }
-
-    @Override
-    public void onClick(View view) {
-        if(ValidationUtils.isListEmptyOrNull(steps)){
-            return;
-        }
-        if(view == imageButtonNextStep){
-            if(position == steps.size()-1){
-                position = 0;
-            }else {
-                position++;
-            }
-            setData();
-            setVideoSourceAndPlay();
-        }
-        if(view == imageButtonPreviousStep){
-            if(position == 0){
-                position = steps.size()-1;
-            }else {
-                position--;
-            }
-            setData();
-            setVideoSourceAndPlay();
-        }
+    private void resetResumePosition() {
+        resumeWindow = 0;
+        resumePosition = 0;
     }
 
-    //callback
-    private Player.EventListener mPlayerListener = new Player.EventListener() {
         @Override
-        public void onTimelineChanged(Timeline timeline, Object manifest) {
-
-        }
-
-        @Override
-        public void onTracksChanged(TrackGroupArray trackGroups, TrackSelectionArray trackSelections) {
-
-        }
-
-        @Override
-        public void onLoadingChanged(boolean isLoading) {
-
-        }
-
-        @Override
-        public void onPlayerStateChanged(boolean playWhenReady, int playbackState) {
-
-            Log.d(LOG_TAG , "onPlayerStateChanged()playbackState::"+playbackState);
-            if(playbackState == Player.STATE_BUFFERING){
-                //show the loading Indicator
-                videoBufferIndicator.setVisibility(View.VISIBLE);
+        public void onClick(View view) {
+            if(ValidationUtils.isListEmptyOrNull(steps)){
+                return;
             }
-            if(playbackState == Player.STATE_READY){
-                //hide the loading indicator
-                videoBufferIndicator.setVisibility(View.INVISIBLE);
+            resetResumePosition();
+            if(view == imageButtonNextStep){
+                if(position == steps.size()-1){
+                    position = 0;
+                }else {
+                    position++;
+                }
+                setData();
+                setVideoSourceAndPlay();
+            }
+            if(view == imageButtonPreviousStep){
+                if(position == 0){
+                    position = steps.size()-1;
+                }else {
+                    position--;
+                }
+                setData();
+                setVideoSourceAndPlay();
+            }
+        }
+
+        //callback
+        private final Player.EventListener mPlayerListener = new Player.EventListener() {
+            @Override
+            public void onTimelineChanged(Timeline timeline, Object manifest) {
+
             }
 
-        }
+            @Override
+            public void onTracksChanged(TrackGroupArray trackGroups, TrackSelectionArray trackSelections) {
 
-        @Override
-        public void onRepeatModeChanged(int repeatMode) {
+            }
 
-        }
+            @Override
+            public void onLoadingChanged(boolean isLoading) {
 
-        @Override
-        public void onPlayerError(ExoPlaybackException error) {
+            }
 
-        }
+            @Override
+            public void onPlayerStateChanged(boolean playWhenReady, int playbackState) {
 
-        @Override
-        public void onPositionDiscontinuity() {
+                Log.d(LOG_TAG , "onPlayerStateChanged()playbackState::"+playbackState);
+                if(playbackState == Player.STATE_BUFFERING){
+                    //show the loading Indicator
+                    videoBufferIndicator.setVisibility(View.VISIBLE);
+                }
+                if(playbackState == Player.STATE_READY){
+                    //hide the loading indicator
+                    videoBufferIndicator.setVisibility(View.INVISIBLE);
+                }
+                if(playbackState == Player.STATE_ENDED){
+                    //hide the loading indicator
+                    videoBufferIndicator.setVisibility(View.INVISIBLE);
+                }
 
-        }
+            }
 
-        @Override
-        public void onPlaybackParametersChanged(PlaybackParameters playbackParameters) {
+            @Override
+            public void onRepeatModeChanged(int repeatMode) {
 
-        }
-    };
-}
+            }
+
+            @Override
+            public void onPlayerError(ExoPlaybackException error) {
+
+            }
+
+            @Override
+            public void onPositionDiscontinuity() {
+
+            }
+
+            @Override
+            public void onPlaybackParametersChanged(PlaybackParameters playbackParameters) {
+
+            }
+        };
+    }

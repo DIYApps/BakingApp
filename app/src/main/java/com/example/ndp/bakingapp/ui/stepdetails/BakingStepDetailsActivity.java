@@ -1,10 +1,11 @@
 package com.example.ndp.bakingapp.ui.stepdetails;
 
+import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+import android.view.MenuItem;
 
 import com.example.ndp.bakingapp.R;
 import com.example.ndp.bakingapp.data.models.BakingSteps;
@@ -41,5 +42,14 @@ public class BakingStepDetailsActivity extends AppCompatActivity {
             getSupportActionBar().setTitle(R.string.step_action_title);
             getSupportActionBar().setLogo(R.drawable.exo_controls_play);
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == android.R.id.home){
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

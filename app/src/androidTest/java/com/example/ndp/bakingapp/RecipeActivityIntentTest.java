@@ -2,20 +2,15 @@ package com.example.ndp.bakingapp;
 
 
 import android.content.ComponentName;
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.test.espresso.contrib.RecyclerViewActions;
-import android.support.test.espresso.intent.matcher.BundleMatchers;
 import android.support.test.espresso.intent.rule.IntentsTestRule;
-import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.util.Log;
 
 import com.example.ndp.bakingapp.data.models.Recipe;
 import com.example.ndp.bakingapp.ui.recipedetails.RecipeDetailsActivity;
 import com.example.ndp.bakingapp.ui.recipelist.RecipeActivity;
-import com.example.ndp.bakingapp.utils.DbUtils;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
@@ -27,12 +22,9 @@ import org.junit.runner.RunWith;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.intent.Intents.intended;
-import static android.support.test.espresso.intent.matcher.BundleMatchers.hasEntry;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
-import static android.support.test.espresso.intent.matcher.IntentMatchers.hasExtra;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasExtras;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.toPackage;
-import static android.support.test.espresso.matcher.ViewMatchers.hasErrorText;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 
 @RunWith(AndroidJUnit4.class)
@@ -79,7 +71,7 @@ public class RecipeActivityIntentTest {
             @Override
             public void describeTo(Description description) {
                 description.appendText("has bundle with: key: " +key);
-                description.appendText(" value: " + value.toString());
+                description.appendText(" value: " + value);
             }
         };
     }

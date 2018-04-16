@@ -6,14 +6,16 @@ import android.net.Uri;
 import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
+
 import com.example.ndp.bakingapp.R;
+
 import static com.example.ndp.bakingapp.data.local.provider.RecipeContract.IngredientEntry;
 
 public class IngredientWidgetViewFactory implements RemoteViewsService.RemoteViewsFactory {
 
     private static final String LOG_TAG = "_BAK_ViewFactory" ;
-    private Context mContext;
-    private String mRecipeId;
+    private final Context mContext;
+    private final String mRecipeId;
     private Cursor mCursor;
 
     public IngredientWidgetViewFactory(Context context, String recipeId) {

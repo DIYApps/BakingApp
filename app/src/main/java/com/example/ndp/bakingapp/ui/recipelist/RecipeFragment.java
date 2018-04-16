@@ -16,15 +16,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ndp.bakingapp.R;
-import com.example.ndp.bakingapp.data.PreferenceHelper;
 import com.example.ndp.bakingapp.data.adapters.RecipeAdapter;
 import com.example.ndp.bakingapp.data.models.Recipe;
 import com.example.ndp.bakingapp.ui.recipedetails.RecipeDetailsActivity;
-import com.example.ndp.bakingapp.ui.widget.WidgetUpdateService;
 import com.example.ndp.bakingapp.utils.ValidationUtils;
 
 import java.util.ArrayList;
@@ -54,7 +51,7 @@ public class RecipeFragment extends Fragment implements RecipeAdapter.OnItemClic
     private static final String RECIPE_LIST_KEY = "recipe_list_key";
     private static final String RECIPE_KEY = "recipe_key";
     private ArrayList<Recipe> recipes;
-    Unbinder  mUnbinder;
+    private Unbinder  mUnbinder;
 
 
     public RecipeFragment() {

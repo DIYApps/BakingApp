@@ -8,8 +8,7 @@ import android.widget.RemoteViewsService;
 public class IngredientsWidgetService extends RemoteViewsService {
 
 
-     static final String LOG_TAG = "_BAK_WidgetService";
-    private static final String RECIPE_ID_KEY = "recipe_id_key";
+     private static final String LOG_TAG = "_BAK_WidgetService";
 
     @Override
     public RemoteViewsFactory onGetViewFactory(Intent intent) {

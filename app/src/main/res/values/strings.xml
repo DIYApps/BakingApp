@@ -19,4 +19,8 @@
     <string name="widget_config_failed_toast_message">No recipe found.Widget can\'t be configured.</string>
     <string name="recipe_detail_loading_error_message">Error in loading the recipe details</string>
     <string name="action_close">CLOSE</string>
+    <string name="ingredients_list">Ingredients List</string>
+    <string name="baking_steps_label">Baking Steps</string>
+    <string name="empty_list_image_description">Empty list image</string>
+    <string name="recipe_image_description">Recipe image</string>
 </resources>

@@ -11,7 +11,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -106,11 +105,6 @@ public class RecipeDetailFragment extends Fragment
         fragmentInteraction = null;
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-
-    }
 
     //fragment method to handle new intent sent from widget
     public void onNewIntent(Intent intent){

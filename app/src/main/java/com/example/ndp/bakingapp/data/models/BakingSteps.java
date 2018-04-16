@@ -11,7 +11,7 @@ public class BakingSteps implements Parcelable {
     private String videoURL;
     private String thumbnailURL;
 
-    public BakingSteps(){;
+    public BakingSteps(){
     }
 
     protected BakingSteps(Parcel in) {

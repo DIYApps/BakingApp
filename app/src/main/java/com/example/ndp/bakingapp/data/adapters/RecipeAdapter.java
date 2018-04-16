@@ -21,10 +21,10 @@ import butterknife.ButterKnife;
 
 public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder> {
 
-    private OnItemClickedListener mListener;
-    private ArrayList<Recipe> mRecipeList = new ArrayList();
+    private final OnItemClickedListener mListener;
+    private ArrayList<Recipe> mRecipeList = new ArrayList<>();
     private Context mContext;
-    private int[] images =  {R.drawable.f1 , R.drawable.f2, R.drawable.f3 ,R.drawable.f4};
+    private final int[] images =  {R.drawable.f1 , R.drawable.f2, R.drawable.f3 ,R.drawable.f4};
 
     public RecipeAdapter(OnItemClickedListener mListener) {
         this.mListener = mListener;

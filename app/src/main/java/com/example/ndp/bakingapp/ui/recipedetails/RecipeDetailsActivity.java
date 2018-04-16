@@ -1,12 +1,12 @@
 package com.example.ndp.bakingapp.ui.recipedetails;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 
 import com.example.ndp.bakingapp.R;
@@ -17,24 +17,18 @@ import com.example.ndp.bakingapp.utils.ValidationUtils;
 
 public class RecipeDetailsActivity extends AppCompatActivity
         implements RecipeDetailFragment.FragmentInteraction {
+
     private static final String STEP_LIST_KEY =  "step_list_key";
     private static final String STEP_POSITION_KEY = "step_position_key";
     private static final String LOG_TAG = "_BAK_RecipeActivity";
     private static final String BACKSTACK_TAG = "fragment_backstack_tag" ;
-    private Recipe recipe;
     private boolean isTwoPlane;
-    private static final String RECIPE_KEY = "recipe_key";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_details);
-        if(findViewById(R.id.stepDetailsFragmentContainer) == null){
-            isTwoPlane =  false;
-        }
-        else{
-            isTwoPlane =  true;
-        }
+        isTwoPlane = findViewById(R.id.stepDetailsFragmentContainer) != null;
 
     }
 
@@ -51,14 +45,8 @@ public class RecipeDetailsActivity extends AppCompatActivity
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
-
-    @Override
     public void onFragmentInteraction(Recipe recipe,int position) {
-        this.recipe =  recipe;
+
         if(isTwoPlane){
             BakingStepsDetailFragment bakingStepsDetailFragment =
                     new BakingStepsDetailFragment();

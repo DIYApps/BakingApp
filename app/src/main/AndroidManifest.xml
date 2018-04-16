@@ -32,9 +32,6 @@
         <activity
             android:name=".ui.stepdetails.BakingStepDetailsActivity"
             android:theme="@style/VideoPlayerActivityTheme">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.recipedetails.RecipeDetailsActivity" />
         </activity>
 
         <receiver android:name=".ui.widget.BakingAppWidget">

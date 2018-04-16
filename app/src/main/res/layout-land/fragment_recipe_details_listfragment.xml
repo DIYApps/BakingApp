@@ -2,7 +2,6 @@
 <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/recipeDetailsNestedScrollView"
     android:layout_height="match_parent">
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -25,7 +24,7 @@
             android:background="@android:color/black"
             android:gravity="center"
             style="@style/Base.TextAppearance.AppCompat.Display1"
-            android:text="Ingredients List"/>
+            android:text="@string/ingredients_list"/>
         <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -46,7 +45,7 @@
                 android:gravity="center"
                 android:id="@+id/textViewBakingStepLabel"
                 style="@style/Base.TextAppearance.AppCompat.Display1"
-                android:text="Baking Steps"/>
+                android:text="@string/baking_steps_label"/>
         <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_weight="1"

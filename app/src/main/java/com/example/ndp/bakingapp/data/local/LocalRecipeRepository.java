@@ -1,11 +1,8 @@
 package com.example.ndp.bakingapp.data.local;
 
-import android.content.ContentResolver;
 import android.util.Log;
 
-import com.example.ndp.bakingapp.BakingApp;
 import com.example.ndp.bakingapp.data.RecipeRepository;
-import com.example.ndp.bakingapp.data.models.BakingSteps;
 import com.example.ndp.bakingapp.data.models.Recipe;
 import com.example.ndp.bakingapp.utils.DbUtils;
 import com.example.ndp.bakingapp.utils.ValidationUtils;

@@ -6,6 +6,6 @@
     android:minHeight="110dp"
     android:previewImage="@drawable/appwidget_preview"
     android:resizeMode="horizontal|vertical"
-    android:updatePeriodMillis="18000000"
+    android:updatePeriodMillis="86400000"
     android:configure="com.example.ndp.bakingapp.ui.widget.WidgetConfigurationActivity"
     android:widgetCategory="home_screen"></appwidget-provider>

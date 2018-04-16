@@ -11,11 +11,7 @@ import android.widget.RemoteViews;
 
 import com.example.ndp.bakingapp.R;
 import com.example.ndp.bakingapp.data.PreferenceHelper;
-import com.example.ndp.bakingapp.data.local.provider.RecipeDbHelper;
-import com.example.ndp.bakingapp.data.models.Recipe;
 import com.example.ndp.bakingapp.ui.recipedetails.RecipeDetailsActivity;
-import com.example.ndp.bakingapp.ui.recipelist.RecipeActivity;
-import com.example.ndp.bakingapp.utils.DbUtils;
 import com.example.ndp.bakingapp.utils.ValidationUtils;
 
 /**
@@ -24,9 +20,7 @@ import com.example.ndp.bakingapp.utils.ValidationUtils;
 public class BakingAppWidget extends AppWidgetProvider {
 
     private static final String RECIPE_ID_KEY = "recipe_id_key";
-    private static final String RECIPE_NAME_KEY = "recipe_name_key";
     private static final String LOG_TAG = "_BAK_BakingAppWidget";
-    private static final String RECIPE_KEY = "recipe_key";
 
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
                                 int appWidgetId ) {

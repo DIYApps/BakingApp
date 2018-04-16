@@ -21,8 +21,7 @@ import butterknife.ButterKnife;
 public class BakingStepAdapter extends RecyclerView.Adapter
         <BakingStepAdapter.BakingStepViewHolder> {
     ArrayList<BakingSteps> steps = new ArrayList<>();
-    private Context mContext;
-    private OnItemClickedListener onItemClickedListener;
+    private final OnItemClickedListener onItemClickedListener;
 
     public BakingStepAdapter(OnItemClickedListener onItemClickedListener) {
         this.onItemClickedListener = onItemClickedListener;
@@ -36,7 +35,7 @@ public class BakingStepAdapter extends RecyclerView.Adapter
     @NonNull
     @Override
     public BakingStepViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        mContext = parent.getContext();
+        Context mContext = parent.getContext();
         int layoutIdForListItem = R.layout.baking_steps_item_layout;
         LayoutInflater inflater = LayoutInflater.from(mContext);
         boolean shouldAttachToParentImmediately = false;

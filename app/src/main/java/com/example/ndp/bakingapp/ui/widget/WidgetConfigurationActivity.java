@@ -2,9 +2,8 @@ package com.example.ndp.bakingapp.ui.widget;
 
 import android.appwidget.AppWidgetManager;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.AppCompatRadioButton;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.widget.RadioButton;
@@ -13,15 +12,13 @@ import android.widget.Toast;
 
 import com.example.ndp.bakingapp.R;
 import com.example.ndp.bakingapp.data.PreferenceHelper;
-import com.example.ndp.bakingapp.utils.ValidationUtils;
 
 import java.util.HashSet;
 
 public class WidgetConfigurationActivity extends AppCompatActivity {
 
     private static final String LOG_TAG = "_BAK_COnfigActivity";
-    private RadioGroup radioGroup;
-    int appWidgetId = 0;
+    private int appWidgetId = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +29,7 @@ public class WidgetConfigurationActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_widget_configuration);
         Log.d(LOG_TAG, "onCreate():::");
-        radioGroup = findViewById(R.id.recipeNameRadioGroup);
+        RadioGroup radioGroup = findViewById(R.id.recipeNameRadioGroup);
         PreferenceHelper preferenceHelper = PreferenceHelper.getInstance();
         HashSet<String> recipeStrings = preferenceHelper.getRecipeNamesFromSharedPreference();
 
@@ -44,6 +41,7 @@ public class WidgetConfigurationActivity extends AppCompatActivity {
             Toast.makeText(this, R.string.widget_config_failed_toast_message
                     , Toast.LENGTH_SHORT).show();
             finish();
+            return;
         }
 
         LayoutInflater layoutInflater = LayoutInflater.from(this);

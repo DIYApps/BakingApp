@@ -11,7 +11,6 @@ import android.util.Log;
 import com.example.ndp.bakingapp.data.PreferenceHelper;
 import com.example.ndp.bakingapp.data.models.Recipe;
 import com.example.ndp.bakingapp.task.RecipeLoader;
-import com.example.ndp.bakingapp.utils.NetworkUtils;
 import com.example.ndp.bakingapp.utils.ValidationUtils;
 
 import java.util.ArrayList;
@@ -20,8 +19,8 @@ public class RecipePresenter {
 
     private static final int RECIPE_LOADER_ID = 101;
     private static final String LOG_TAG ="_BAK_MainPresenter" ;
-    private Context mContext;
-    private RecipeView recipeView;
+    private final Context mContext;
+    private final RecipeView recipeView;
 
     //inject the context and recipeView to presenter
     public RecipePresenter(Context mContext , RecipeView recipeView ) {
@@ -41,7 +40,7 @@ public class RecipePresenter {
     }
 
     //create a callback
-    private LoaderManager.LoaderCallbacks<ArrayList<Recipe>> loaderCallbacks = new
+    private final LoaderManager.LoaderCallbacks<ArrayList<Recipe>> loaderCallbacks = new
             LoaderManager.LoaderCallbacks<ArrayList<Recipe>>() {
                 @Override
                 public Loader<ArrayList<Recipe>> onCreateLoader(int i, Bundle bundle) {

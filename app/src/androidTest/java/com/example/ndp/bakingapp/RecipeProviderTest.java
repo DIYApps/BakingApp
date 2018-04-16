@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.support.test.InstrumentationRegistry;
 import android.test.ProviderTestCase2;
 import android.util.Log;
+
 import com.example.ndp.bakingapp.data.local.provider.RecipeContract;
 import com.example.ndp.bakingapp.data.local.provider.RecipeProvider;
 

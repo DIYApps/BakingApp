@@ -6,8 +6,6 @@ import android.content.SharedPreferences;
 import com.example.ndp.bakingapp.BakingApp;
 
 import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 /**
  * This class provide helper methods for writing and reading values from shared

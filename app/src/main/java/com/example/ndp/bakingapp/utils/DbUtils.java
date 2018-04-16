@@ -7,17 +7,17 @@ import android.net.Uri;
 import android.util.Log;
 
 import com.example.ndp.bakingapp.BakingApp;
+import com.example.ndp.bakingapp.data.local.provider.RecipeContract;
 import com.example.ndp.bakingapp.data.models.BakingSteps;
 import com.example.ndp.bakingapp.data.models.Ingredient;
 import com.example.ndp.bakingapp.data.models.Recipe;
-import com.example.ndp.bakingapp.data.local.provider.RecipeContract;
 
 import java.util.ArrayList;
 
 public class DbUtils {
 
     private static final String LOG_TAG = "_BAK_DbUtils";
-    private ContentResolver contentResolver;
+    private final ContentResolver contentResolver;
 
     private static DbUtils sDbUtils;
 

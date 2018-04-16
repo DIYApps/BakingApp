@@ -16,9 +16,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
-        android:padding="32dp"
+        android:contentDescription="@string/empty_list_image_description"
+        android:padding="@dimen/error_image_padding"
         android:gravity="center"
-        android:textSize="20sp"
         android:src="@drawable/ic_empty_list"
         android:visibility="invisible"/>
 

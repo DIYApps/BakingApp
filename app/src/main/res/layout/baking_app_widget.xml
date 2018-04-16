@@ -16,15 +16,14 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:paddingLeft="8dp"
+        android:paddingLeft="@dimen/widget_text_padding_left"
         android:background="@drawable/widget_heading_backgound"
+        android:drawableRight="@drawable/ic_click_widget"
         android:gravity="center_vertical"
         android:drawablePadding="16dp"
-        android:drawableLeft="@drawable/ic_cooking_widget_marker"
-        android:contentDescription="@string/appwidget_recipe_name_label"
         tools:text="@string/appwidget_text"
         android:textColor="#ffffff"
-        android:textSize="24sp"
+        android:textSize="18sp"
         android:textStyle="bold|italic" />
     <ListView
         android:layout_width="match_parent"
