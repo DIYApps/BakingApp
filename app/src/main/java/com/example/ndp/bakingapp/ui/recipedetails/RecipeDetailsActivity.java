@@ -20,6 +20,7 @@ public class RecipeDetailsActivity extends AppCompatActivity
     private static final String STEP_LIST_KEY =  "step_list_key";
     private static final String STEP_POSITION_KEY = "step_position_key";
     private static final String LOG_TAG = "_BAK_RecipeActivity";
+    private static final String BACKSTACK_TAG = "fragment_backstack_tag" ;
     private Recipe recipe;
     private boolean isTwoPlane;
     private static final String RECIPE_KEY = "recipe_key";
@@ -33,20 +34,6 @@ public class RecipeDetailsActivity extends AppCompatActivity
         }
         else{
             isTwoPlane =  true;
-        }
-
-        //check for savedInstanceBundle
-        if(savedInstanceState == null){
-//            //inflate the fragment if two plane
-//            if(isTwoPlane){
-//                BakingStepsDetailFragment bakingStepsDetailFragment =
-//                        new BakingStepsDetailFragment();
-//                FragmentManager fragmentManager =  getSupportFragmentManager();
-//                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//                fragmentTransaction.add(R.id.stepDetailsFragmentContainer ,
-//                        bakingStepsDetailFragment , null)
-//                .commit();
-//            }
         }
 
     }
@@ -81,6 +68,7 @@ public class RecipeDetailsActivity extends AppCompatActivity
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.replace(R.id.stepDetailsFragmentContainer ,
                     bakingStepsDetailFragment , null)
+                    .addToBackStack(BACKSTACK_TAG)
                     .commit();
 
         }else{

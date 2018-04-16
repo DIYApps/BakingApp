@@ -14,11 +14,13 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.ndp.bakingapp.R;
 import com.example.ndp.bakingapp.data.adapters.BakingStepAdapter;
 import com.example.ndp.bakingapp.data.adapters.IngredientsAdapter;
 import com.example.ndp.bakingapp.data.models.Recipe;
+import com.example.ndp.bakingapp.utils.ValidationUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -79,6 +81,12 @@ public class RecipeDetailFragment extends Fragment
     private void loadRecipe(Intent intent){
         Recipe recipe =  intent.getParcelableExtra(RECIPE_KEY);
         String recipeId =  intent.getStringExtra(RECIPE_ID_KEY);
+        if(recipe == null && ValidationUtils.isStringEmptyOrNull(recipeId)){
+            Toast.makeText(getContext() , "Can't load the details of recipe" ,
+                    Toast.LENGTH_SHORT).show();
+            getActivity().finish();
+            return;
+        }
         Log.d(LOG_TAG ,"Recipe found with id "+ recipeId );
         mRecipeDetailPresenter.loadRecipeDetails(recipe , recipeId);
     }
