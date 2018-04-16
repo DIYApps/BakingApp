@@ -6,8 +6,9 @@ import android.view.Menu;
 
 import com.example.ndp.bakingapp.R;
 
-/**JAI MAHAKAAL
- * HAR HAR MAHADEV*/
+/**
+ * 30
+ */
 public class RecipeActivity extends AppCompatActivity {
 
     @Override
